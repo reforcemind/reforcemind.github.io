@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>ReForceMind - Resources</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&amp;family=Libre+Franklin:wght@400&amp;family=Newsreader:wght@500;600&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script src="js/tailwind.config.js"></script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        .markdown-body h2 {
+            font-family: "Newsreader", serif;
+            font-size: 32px;
+            font-weight: 500;
+            border-bottom: 0.5px solid #000;
+            padding-bottom: 12px;
+            margin-top: 48px;
+            margin-bottom: 24px;
+        }
+        
+        .markdown-body ul {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 32px;
+        }
+        
+        .markdown-body li {
+            padding: 16px;
+            border: 0.5px solid #000;
+            margin-bottom: -0.5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.4);
+            transition: background-color 0.2s;
+        }
+        
+        .markdown-body li:hover {
+            background: rgba(245, 214, 160, 0.5); /* parchment-deep wash */
+        }
+        
+        .markdown-body li a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-grow: 1;
+            font-family: "JetBrains Mono", monospace;
+            font-size: 13px;
+        }
+    </style>
+</head>
+
+<body
+    class="bg-parchment-base text-ink-black font-body-md antialiased min-h-screen flex flex-col relative overflow-x-hidden">
+        <div class="fixed inset-0 pointer-events-none z-0" style="background-image: linear-gradient(to right, rgba(0,0,0,0.06) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,0,0,0.06) 1px, transparent 1px); background-size: 64px 64px;"></div>
+    
+    <div id="navbar-placeholder"></div>
+
+        <main class="flex-grow z-10 pt-32 px-4 md:px-grid-margin pb-section-gap max-w-4xl mx-auto w-full flex flex-col gap-12">
+        <header class="border-b-[0.5px] border-ink-black pb-8">
+            <h1 class="font-headline-display text-headline-display text-ink-black mb-4">Resources</h1>
+            <p class="font-technical-sm text-technical-sm text-on-surface-variant uppercase tracking-widest">// weights & artifacts</p>
+        </header>
+
+        <section class="markdown-body font-body-md">
+            <h2>Model Weights & Collections</h2>
+            <ul>
+                <li>
+                    <a href="https://huggingface.co/collections/ReForceMind/reversible-flow-adaptation" target="_blank">
+                        <span class="material-symbols-outlined">collections_bookmark</span>
+                        Reversible Flow Adaptation Collection
+                    </a>
+                    <span class="text-technical-sm font-label-caps uppercase text-ochre-discovery">HF Collection</span>
+                </li>
+                <li>
+                    <a href="https://huggingface.co/ReForceMind" target="_blank">
+                        <span class="material-symbols-outlined">hub</span>
+                        ReForceMind Organization Registry
+                    </a>
+                    <span class="text-technical-sm font-label-caps uppercase text-ochre-discovery">Hub</span>
+                </li>
+                <li>
+                    <a href="https://huggingface.co/ReForceMind/panda_domain_randomization_model" target="_blank">
+                        <span class="material-symbols-outlined">data_object</span>
+                        panda_domain_randomization_model
+                    </a>
+                    <span class="text-technical-sm opacity-50">Weights</span>
+                </li>
+                <li>
+                    <a href="https://huggingface.co/ReForceMind/panda_reversible_flow_model" target="_blank">
+                        <span class="material-symbols-outlined">data_object</span>
+                        panda_reversible_flow_model
+                    </a>
+                    <span class="text-technical-sm opacity-50">Weights</span>
+                </li>
+                <li>
+                    <a href="https://huggingface.co/ReForceMind/quadruped_domain_randomization_model" target="_blank">
+                        <span class="material-symbols-outlined">data_object</span>
+                        quadruped_domain_randomization_model
+                    </a>
+                    <span class="text-technical-sm opacity-50">Weights</span>
+                </li>
+                <li>
+                    <a href="https://huggingface.co/ReForceMind/quadruped_reversible_flow_model" target="_blank">
+                        <span class="material-symbols-outlined">data_object</span>
+                        quadruped_reversible_flow_model
+                    </a>
+                    <span class="text-technical-sm opacity-50">Weights</span>
+                </li>
+            </ul>
+
+            <h2>Data Corpora</h2>
+            <ul>
+                <li>
+                    <a href="https://huggingface.co/ReForceMind/panda_domain_randomization" target="_blank">
+                        <span class="material-symbols-outlined">dataset</span>
+                        panda_domain_randomization
+                    </a>
+                    <span class="text-technical-sm opacity-50">1.84M Rows</span>
+                </li>
+                <li>
+                    <a href="https://huggingface.co/ReForceMind/panda_reversible_flow" target="_blank">
+                        <span class="material-symbols-outlined">dataset</span>
+                        panda_reversible_flow
+                    </a>
+                    <span class="text-technical-sm opacity-50">1.84M Rows</span>
+                </li>
+                <li>
+                    <a href="https://huggingface.co/ReForceMind/quadruped_domain_randomization" target="_blank">
+                        <span class="material-symbols-outlined">dataset</span>
+                        quadruped_domain_randomization
+                    </a>
+                    <span class="text-technical-sm opacity-50">Dataset</span>
+                </li>
+                <li>
+                    <a href="https://huggingface.co/ReForceMind/quadruped_reversible_flow" target="_blank">
+                        <span class="material-symbols-outlined">dataset</span>
+                        quadruped_reversible_flow
+                    </a>
+                    <span class="text-technical-sm opacity-50">Dataset</span>
+                </li>
+            </ul>
+
+            <h2>Open Source Tooling</h2>
+            <ul>
+                <li>
+                    <a href="https://github.com/xaiqo/NetForge_RL" target="_blank">
+                        <span class="material-symbols-outlined">code</span>
+                        xaiqo/NetForge_RL
+                    </a>
+                    <span class="text-technical-sm font-label-caps uppercase text-ochre-discovery">Environments</span>
+                </li>
+                <li>
+                    <a href="https://github.com/xaiqo/AIFlow" target="_blank">
+                        <span class="material-symbols-outlined">code</span>
+                        xaiqo/AIFlow
+                    </a>
+                    <span class="text-technical-sm font-label-caps uppercase text-ochre-discovery">Inference</span>
+                </li>
+            </ul>
+        </section>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="js/components.js"></script>
+</body>
+
+</html>
