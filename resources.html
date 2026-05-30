@@ -26,12 +26,20 @@
         
         .markdown-body h2 {
             font-family: "Newsreader", serif;
-            font-size: 32px;
+            font-size: 24px;
             font-weight: 500;
             border-bottom: 0.5px solid #000;
             padding-bottom: 12px;
-            margin-top: 48px;
-            margin-bottom: 24px;
+            margin-top: 32px;
+            margin-bottom: 16px;
+        }
+        
+        @media (min-width: 768px) {
+            .markdown-body h2 {
+                font-size: 32px;
+                margin-top: 48px;
+                margin-bottom: 24px;
+            }
         }
         
         .markdown-body ul {
@@ -62,6 +70,7 @@
             flex-grow: 1;
             font-family: "JetBrains Mono", monospace;
             font-size: 13px;
+            word-break: break-all;
         }
     </style>
 </head>
@@ -74,7 +83,7 @@
 
         <main class="flex-grow z-10 pt-32 px-4 md:px-grid-margin pb-section-gap max-w-4xl mx-auto w-full flex flex-col gap-12">
         <header class="border-b-[0.5px] border-ink-black pb-8">
-            <h1 class="font-headline-display text-headline-display text-ink-black mb-4">Resources</h1>
+            <h1 class="font-headline-display text-headline-lg-mobile md:text-headline-display text-ink-black mb-4">Resources</h1>
             <p class="font-technical-sm text-technical-sm text-on-surface-variant uppercase tracking-widest">// weights & artifacts</p>
         </header>
 

@@ -39,7 +39,7 @@ function selectItem(id) {
                 <span class="inline-block px-3 py-1 bg-parchment-deep hairline-b border-ink-black text-label-caps font-label-caps uppercase rounded-full">${item.type}</span>
                 <span class="text-technical-sm font-technical-sm text-on-surface-variant">Published: ${item.publishedDate}</span>
             </div>
-            <h1 class="text-headline-display font-headline-display text-ink-black leading-tight tracking-tighter">${item.title}</h1>
+            <h1 class="text-headline-lg-mobile md:text-headline-display font-headline-display text-ink-black leading-tight tracking-tighter">${item.title}</h1>
             <div class="flex flex-col gap-2 mt-4 hairline-t border-ink-black pt-4">
                 <h4 class="text-label-caps font-label-caps uppercase text-on-surface-variant">Authors</h4>
                 <p class="text-body-md font-body-md text-ink-black">${item.fullAuthors}</p>
