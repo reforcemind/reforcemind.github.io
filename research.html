@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Research Archive | REFORCEMIND</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700&amp;family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600;6..72,700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet" />
+    <script src="js/tailwind.config.js"></script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .hairline-b { border-bottom-width: 0.5px; }
+            .hairline-t { border-top-width: 0.5px; }
+            .hairline-r { border-right-width: 0.5px; }
+            .hairline-l { border-left-width: 0.5px; }
+            
+            .master-list-item {
+                @apply transition-all duration-300 cursor-pointer;
+            }
+            .master-list-item:hover {
+                @apply bg-parchment-deep bg-opacity-30;
+            }
+            .master-list-item.active {
+                @apply bg-ink-black text-parchment-base;
+            }
+            .master-list-item.active .text-ink-black {
+                @apply text-parchment-base;
+            }
+            .master-list-item.active .text-on-surface-variant {
+                @apply text-surface-variant;
+            }
+            .content-wash {
+                background: radial-gradient(circle at 50% 50%, rgba(122, 26, 26, 0.03) 0%, transparent 60%),
+                            radial-gradient(circle at 100% 0%, rgba(45, 75, 50, 0.03) 0%, transparent 50%);
+            }
+        }
+        .material-symbols-outlined {
+            font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+        }
+    </style>
+</head>
+<body class="bg-parchment-base text-ink-black font-body-lg min-h-screen flex flex-col selection:bg-crimson-authority selection:text-white">
+    <div id="navbar-placeholder"></div>
+
+        <main class="flex-grow flex flex-col md:flex-row relative content-wash pt-16">
+                <aside class="w-full md:w-[30%] border-b-[0.5px] md:border-b-0 hairline-r border-ink-black flex flex-col h-auto md:h-[calc(100vh-64px)] md:sticky md:top-[64px] overflow-y-auto relative">
+            <div class="bg-surface-bright hairline-b border-ink-black shadow-sm relative z-20">
+                <div class="p-6 hairline-b border-ink-black sticky top-0 bg-surface-bright z-10">
+                    <div class="flex justify-between items-end mb-4">
+                        <h2 class="text-label-caps font-label-caps text-on-surface-variant uppercase tracking-widest">Index // 2026</h2>
+                        <span id="entries-count" class="text-technical-sm font-technical-sm text-ochre-discovery"></span>
+                    </div>
+                    <div class="relative">
+                        <input class="w-full bg-transparent border-0 hairline-b border-ink-black focus:ring-0 focus:border-crimson-authority text-body-md font-body-md py-2 px-0 placeholder-outline" placeholder="Search archive..." type="text" />
+                    </div>
+                </div>
+                <div id="research-list" class="flex flex-col">
+                                    </div>
+            </div>
+            
+            <div class="flex-grow flex flex-col justify-end p-4 relative z-10">
+                <div class="p-4 bg-[#03210C] text-parchment-base rounded-xl flex justify-between items-end shadow-lg border border-outline relative overflow-hidden">
+                                        <div class="flex flex-col gap-2 relative z-10">
+                        <h4 class="text-label-caps font-label-caps uppercase tracking-widest text-parchment-deep/70 mb-1">Socials</h4>
+                        <a href="#" class="text-technical-sm font-technical-sm hover:text-ochre-discovery transition-colors flex items-center gap-2">
+                            <span class="material-symbols-outlined text-sm">open_in_new</span> X (Twitter)
+                        </a>
+                        <a href="https://github.com/reforcemind" target="_blank" class="text-technical-sm font-technical-sm hover:text-ochre-discovery transition-colors flex items-center gap-2">
+                            <span class="material-symbols-outlined text-sm">open_in_new</span> GitHub
+                        </a>
+                        <a href="https://huggingface.co/ReForceMind" target="_blank" class="text-technical-sm font-technical-sm hover:text-ochre-discovery transition-colors flex items-center gap-2">
+                            <span class="material-symbols-outlined text-sm">open_in_new</span> Hugging Face
+                        </a>
+                        <a href="#" class="text-technical-sm font-technical-sm hover:text-ochre-discovery transition-colors flex items-center gap-2">
+                            <span class="material-symbols-outlined text-sm">open_in_new</span> LinkedIn
+                        </a>
+                    </div>
+                                        <div class="absolute right-[-20px] bottom-[-20px] w-48 h-48 grid grid-cols-6 grid-rows-6 gap-[2px] opacity-40 pointer-events-none transform rotate-12">
+                        <div class="bg-ochre-discovery opacity-50"></div><div class="bg-transparent"></div><div class="bg-parchment-deep opacity-80"></div><div class="bg-transparent"></div><div class="bg-ochre-discovery"></div><div class="bg-transparent"></div>
+                        <div class="bg-transparent"></div><div class="bg-parchment-base opacity-40"></div><div class="bg-transparent"></div><div class="bg-ochre-discovery opacity-70"></div><div class="bg-transparent"></div><div class="bg-parchment-deep"></div>
+                        <div class="bg-parchment-deep opacity-60"></div><div class="bg-transparent"></div><div class="bg-transparent border border-ochre-discovery opacity-30"></div><div class="bg-transparent"></div><div class="bg-parchment-base opacity-50"></div><div class="bg-transparent"></div>
+                        <div class="bg-transparent border border-parchment-base opacity-20"></div><div class="bg-ochre-discovery"></div><div class="bg-transparent"></div><div class="bg-parchment-deep opacity-90"></div><div class="bg-transparent"></div><div class="bg-ochre-discovery opacity-40"></div>
+                        <div class="bg-ochre-discovery opacity-80"></div><div class="bg-transparent"></div><div class="bg-parchment-base"></div><div class="bg-transparent"></div><div class="bg-transparent border border-parchment-deep opacity-40"></div><div class="bg-parchment-deep opacity-60"></div>
+                        <div class="bg-transparent"></div><div class="bg-parchment-deep opacity-70"></div><div class="bg-transparent"></div><div class="bg-ochre-discovery opacity-50"></div><div class="bg-transparent"></div><div class="bg-ochre-discovery"></div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+                <section id="research-detail" class="w-full md:w-[70%] p-6 md:p-grid-margin overflow-y-auto flex flex-col gap-section-gap min-h-[calc(100vh-64px)]">
+                    </section>
+    </main>
+
+    <div id="footer-placeholder"></div>
+    
+    <script src="js/data.js"></script>
+    <script src="js/components.js"></script>
+    <script src="js/research.js"></script>
+</body>
+</html>
