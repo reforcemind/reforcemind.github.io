@@ -1,0 +1,20 @@
+[
+  {
+    "id": "01",
+    "title": "Research Scientist - RL",
+    "team": "Core Team",
+    "description": "We are seeking a Research Scientist to lead our foundational work in reinforcement learning. You will focus on scaling algorithms, developing novel reward shaping techniques, and improving sample efficiency in high-dimensional continuous action spaces. \n\nIdeal candidates have a strong publication record in top-tier conferences (NeurIPS, ICML, ICLR) and deep expertise in modern deep RL architectures."
+  },
+  {
+    "id": "02",
+    "title": "Systems Engineer - Training",
+    "team": "Infrastructure",
+    "description": "As a Systems Engineer, you will build and optimize the massive-scale training infrastructure required for our foundational models. You will deal with complex challenges relating to distributed computing, inter-node networking (InfiniBand/RoCE), and hardware-level optimization. \n\nExperience with CUDA, PyTorch internals, Megatron-LM, and managing clusters of 10,000+ GPUs is highly desired."
+  },
+  {
+    "id": "03",
+    "title": "Machine Learning Engineer",
+    "team": "Applied",
+    "description": "The ML Engineer role bridges research and production. You will be responsible for deploying, fine-tuning, and maintaining large-scale models in production environments. You will work closely with researchers to translate experimental ideas into robust, scalable, and highly available services. \n\nStrong software engineering principles, experience with MLOps frameworks, and a solid understanding of model inference optimizations (e.g. quantization, TensorRT) are required."
+  }
+]
