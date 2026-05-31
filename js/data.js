@@ -64,18 +64,18 @@ const rolesData = [
         id: "01",
         title: "Research Scientist - RL",
         team: "Core Team",
-        description: "Product: Next-generation post-training environments and unsupervised reinforcement learning architectures.\n\nResponsibilities:\n- Design and implement novel reinforcement learning algorithms for continuous control.\n- Scale unsupervised environment interaction and reward shaping methodologies.\n- Co-develop scalable algorithmic substitution tools for Vision-Language-Action (VLA) models."
+        description: `Product: <a href="" target="_blank" class="underline decoration-ink-black/40 hover:decoration-ink-black transition-colors font-medium">Post-training framework</a>\n\nResponsibilities:\n- Building automated DPO pipelines that use Vision-Language Models (VLMs) as judges for VLA trajectories.\n- Implementing XAI tools directly into the environment to analyze parameters and identify agent bottlenecks.\n- Designing and testing unsupervised environment interactions without relying on hardcoded, manual reward functions.`
     },
     {
         id: "02",
         title: "Systems Engineer - Training",
         team: "Infrastructure",
-        description: "Product: High-fidelity simulators and distributed computing engines that train asynchronous multi-agent policies.\n\nResponsibilities:\n- Build and optimize the distributed systems that power massive-scale RL experiments.\n- Tackle critical bottlenecks in data loading, multi-node communication, and raw GPU utilization.\n- Implement dual-mode engines allowing zero-shot evaluation across isolated environments."
+        description: `Product: <a href="" target="_blank" class="underline decoration-ink-black/40 hover:decoration-ink-black transition-colors font-medium">Post-training framework</a>\n\nResponsibilities:\n- Building and optimizing the infrastructure that connects local simulation rollouts with VLM evaluation loops.\n- Tackling system bottlenecks in data loading, state rendering, and raw inference speeds during the post-training phase.\n- Ensuring the framework remains lightweight, easy to deploy locally.`
     },
     {
         id: "03",
         title: "Machine Learning Engineer",
         team: "Applied",
-        description: "Product: The deployment pipeline and edge-inference tools for hardware-constrained robotics and edge-devices.\n\nResponsibilities:\n- Deploy and optimize policy models for strict thermal and metabolic budgets.\n- Maintain and scale production inference pipelines utilizing TensorRT and TorchScript.\n- Engineer the continuous integration and deployment systems that deliver model weights directly to live robotic operations."
+        description: `Product: <a href="https://github.com/reforcemind/NetForge_RL" target="_blank" class="underline decoration-ink-black/40 hover:decoration-ink-black transition-colors font-medium">Netforge</a>\n\nResponsibilities:\n- Rewriting the core environment into pure JAX.\n- Maintaining a dual-backend architecture to keep the JAX core and PyTorch ecosystem working together smoothly via zero-copy data transfers.\n- Building semantic wrappers that translate numerical environment states into prompts, allowing us to test and fine-tune LLMs/VLMs directly in the loop.\n- Setting up an independent rendering pipeline and writing clean, interactive notebooks so the project is actually straightforward to use.`
     }
 ];

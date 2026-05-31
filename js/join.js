@@ -130,7 +130,7 @@ function updateRolesLayout() {
         const role = rolesData.find(r => r.id === expandedRoleId);
         if (role) {
             document.getElementById('detail-title').innerText = role.title;
-            document.getElementById('detail-desc').innerText = role.description;
+            document.getElementById('detail-desc').innerHTML = role.description;
         }
 
     } else {
@@ -208,7 +208,7 @@ function openModal(id) {
     
     document.getElementById('modal-title').innerText = role.title;
     document.getElementById('modal-team').innerText = role.team;
-    document.getElementById('modal-desc').innerText = role.description;
+    document.getElementById('modal-desc').innerHTML = role.description;
     
     const modal = document.getElementById('role-modal');
     const content = document.getElementById('modal-content');
