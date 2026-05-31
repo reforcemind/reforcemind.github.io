@@ -31,7 +31,7 @@ function renderFooter() {
     footerPlaceholder.innerHTML = `
         <footer class="w-full flex flex-col md:flex-row justify-between items-start gap-4 px-6 md:px-grid-margin py-8 mt-auto bg-primary text-parchment-base border-t-[0.5px] border-ink-black z-50 relative">
             <div class="flex flex-wrap gap-4 font-technical-sm text-technical-sm">
-                <a href="#" class="text-parchment-deep/70 hover:text-parchment-base transition-colors flex items-center gap-1">
+                <a href="https://x.com/elprofesoriqo" target="_blank" class="text-parchment-deep/70 hover:text-parchment-base transition-colors flex items-center gap-1">
                     <span class="material-symbols-outlined text-[14px]">open_in_new</span> X (Twitter)
                 </a>
                 <a href="https://github.com/reforcemind" target="_blank" class="text-parchment-deep/70 hover:text-parchment-base transition-colors flex items-center gap-1">
