@@ -24,7 +24,7 @@
         html {
             scroll-behavior: smooth;
         }
-        
+
         .markdown-body h2 {
             font-family: "Newsreader", serif;
             font-size: 32px;
@@ -34,7 +34,7 @@
             margin-top: 48px;
             margin-bottom: 24px;
         }
-        
+
         .markdown-body h3 {
             font-family: "JetBrains Mono", monospace;
             font-size: 13px;
@@ -45,7 +45,7 @@
             margin-bottom: 16px;
             color: #4c6c50;
         }
-        
+
         .markdown-body h2 {
             font-family: "Newsreader", serif;
             font-size: 24px;
@@ -55,7 +55,7 @@
             margin-top: 32px;
             margin-bottom: 16px;
         }
-        
+
         @media (min-width: 768px) {
             .markdown-body h2 {
                 font-size: 32px;
@@ -63,18 +63,18 @@
                 margin-bottom: 24px;
             }
         }
-        
+
         .markdown-body p {
             margin-bottom: 24px;
             line-height: 1.6;
         }
-        
+
         .markdown-body ul {
             list-style-type: square;
             padding-left: 24px;
             margin-bottom: 24px;
         }
-        
+
         .markdown-body li {
             margin-bottom: 8px;
         }
@@ -83,43 +83,39 @@
 
 <body
     class="bg-parchment-base text-ink-black font-body-md antialiased min-h-screen flex flex-col relative overflow-x-hidden">
-        <div class="fixed inset-0 pointer-events-none z-0" style="background-image: linear-gradient(to right, rgba(0,0,0,0.06) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,0,0,0.06) 1px, transparent 1px); background-size: 64px 64px;"></div>
-    
+    <div class="fixed inset-0 pointer-events-none z-0"
+        style="background-image: linear-gradient(to right, rgba(0,0,0,0.06) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,0,0,0.06) 1px, transparent 1px); background-size: 64px 64px;">
+    </div>
+
     <div id="navbar-placeholder"></div>
 
-        <main class="flex-grow z-10 pt-32 px-4 md:px-grid-margin pb-section-gap max-w-4xl mx-auto w-full flex flex-col gap-12">
+    <main
+        class="flex-grow z-10 pt-32 px-4 md:px-grid-margin pb-section-gap max-w-4xl mx-auto w-full flex flex-col gap-12">
         <header class="border-b-[0.5px] border-ink-black pb-8">
-            <h1 class="font-headline-display text-headline-lg-mobile md:text-headline-display text-ink-black mb-4">Alignment Specification</h1>
-            <p class="font-technical-sm text-technical-sm text-on-surface-variant uppercase tracking-widest">// constraints & friction</p>
+            <h1 class="font-headline-display text-headline-lg-mobile md:text-headline-display text-ink-black mb-4">
+                Alignment Specification</h1>
+            <p class="font-technical-sm text-technical-sm text-on-surface-variant uppercase tracking-widest">//
+                constraints & friction</p>
         </header>
 
         <section class="markdown-body font-body-md">
             <p>
-                Alignment in highly scaled Vision-Language-Action (VLA) architectures cannot be achieved through post-hoc filtering. It requires parameterizing behavioral friction directly into the objective function during the pre-training and post-training phases.
+                At ReForceMind, we build safety directly into our AI models from the start.
             </p>
 
-            <h2>Mitigation of Reward Hacking</h2>
+            <h2>Preventing Unintended Behaviors</h2>
             <p>
-                Classical reinforcement learning often converges on proxy-reward hacking when environments lack fidelity. To prevent value-misalignment, we utilize multi-agent adversarial environments. Secondary agents act as constraint verifiers, introducing dynamic penalties for policy collapse or proxy gaming.
-            </p>
-            <ul>
-                <li>Verification policies run continuously in parallel to the main training loop.</li>
-                <li>Penalty gradients are injected dynamically, forcing robust generalization.</li>
-            </ul>
-
-            <h2>Out-of-Distribution Safety Bounds</h2>
-            <p>
-                When VLA models encounter OOD (Out-of-Distribution) states, action certainty drops. Rather than defaulting to hallucinated outputs, our framework enforces a hard structural fallback. Latent representations exhibiting entropy above predefined thresholds trigger a systemic halt or conservative failure mode.
+                We continuously verify our models during training to ensure they don't exhibit unintended behaviors.
             </p>
 
-            <h3>Conservative Failure Architecture</h3>
+            <h2>Safe Failures</h2>
             <p>
-                By restricting the continuous action space strictly to known, verified sub-spaces during high-entropy events, the model avoids catastrophic misprediction in physical deployment scenarios.
+                Models stop safely in unfamiliar situations instead of guessing. We also provide explainability tools so you can understand why.
             </p>
 
-            <h2>Parameterizing Friction</h2>
+            <h2>Measurable Safety</h2>
             <p>
-                We do not define "ethics" as an abstract moral concept, but as mathematical friction applied to unsafe state transitions. This reduces complex philosophical alignment problems into quantifiable gradient descent objectives.
+                We treat ethics and safety as concrete, measurable goals that our models must satisfy at every step.
             </p>
         </section>
     </main>
