@@ -8,8 +8,8 @@ const researchData = [
         publishedDate: "May 28, 2026",
         fullAuthors: "ReForceMind Research Team",
         abstract: [
-            "Empirical evaluation of Flow-Matched Distillation and Reversible Flow Adaptation across Quadruped Locomotion and Panda Manipulation. We demonstrate significant hardware efficiency and robust out-of-distribution generalization capabilities for edge deployment.",
-            "This report details the projection manifold validation and hardware constraints encountered when distilling complex continuous flow dynamics into reversible architectures. We specifically analyze training convergence and latency trade-offs, proving that flow-matched architectures can operate within strict metabolic budgets without sacrificing manipulation precision or locomotion stability."
+            "Evaluation of Flow-Matched Distillation and Reversible Flow Adaptation across Quadruped Locomotion and Panda Manipulation. We demonstrate hardware efficiency and out-of-distribution generalization capabilities for edge deployment.",
+            "This report details the projection manifold validation and hardware constraints encountered when distilling continuous flow dynamics into reversible architectures. We analyze training convergence and latency trade-offs, proving that flow-matched architectures can operate within metabolic budgets without sacrificing manipulation precision or locomotion stability."
         ],
         links: {
             pdf: "https://reforcemind.github.io/Reversible-Flow-Adaptation/",
