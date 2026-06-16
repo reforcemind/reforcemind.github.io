@@ -16,7 +16,8 @@ const researchData = [
             github: "https://github.com/reforcemind/Reversible-Flow-Adaptation",
             weights: "resources.html",
             huggingface: "https://huggingface.co/collections/ReForceMind/reversible-flow-adaptation"
-        }
+        },
+        contentFile: "js/posts/ref-001.md"
     },
     {
         id: "REF-002",
@@ -36,7 +37,8 @@ const researchData = [
             github: "https://github.com/xaiqo/NetForge_RL",
             github2: "https://github.com/xaiqo/ct-gmarl",
             weights: "resources.html"
-        }
+        },
+        contentFile: "js/posts/ref-002.md"
     },
     {
         id: "REF-003",
@@ -55,7 +57,8 @@ const researchData = [
             pdf: "https://arxiv.org/abs/2603.23722",
             github: "https://github.com/xaiqo/edtmappo",
             weights: "resources.html"
-        }
+        },
+        contentFile: "js/posts/ref-003.md"
     }
 ];
 
