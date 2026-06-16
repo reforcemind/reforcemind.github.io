@@ -12,12 +12,11 @@ const researchData = [
             "This report details the projection manifold validation and hardware constraints encountered when distilling continuous flow dynamics into reversible architectures. We analyze training convergence and latency trade-offs, proving that flow-matched architectures can operate within metabolic budgets without sacrificing manipulation precision or locomotion stability."
         ],
         links: {
-            pdf: "https://reforcemind.github.io/Reversible-Flow-Adaptation/",
             github: "https://github.com/reforcemind/Reversible-Flow-Adaptation",
             weights: "resources.html",
             huggingface: "https://huggingface.co/collections/ReForceMind/reversible-flow-adaptation"
         },
-        contentFile: "js/posts/ref-001.md"
+        contentFile: "js/posts/ref-001/ref-001.md"
     },
     {
         id: "REF-002",

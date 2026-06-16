@@ -124,6 +124,56 @@ function selectItem(id) {
             })
             .then(text => {
                 document.getElementById('markdown-content').innerHTML = marked.parse(text);
+                
+                if (typeof mermaid !== 'undefined') {
+                    const mermaidBlocks = document.querySelectorAll('code.language-mermaid');
+                    mermaidBlocks.forEach(block => {
+                        const pre = block.parentElement;
+                        const div = document.createElement('div');
+                        div.className = 'mermaid';
+                        div.textContent = block.textContent;
+                        pre.parentElement.replaceChild(div, pre);
+                    });
+                    
+                    const newMermaidBlocks = document.querySelectorAll('.mermaid');
+                    if (newMermaidBlocks.length > 0) {
+                        mermaid.run({nodes: newMermaidBlocks});
+                    }
+                }
+                
+                // Format headings
+                const markdownContent = document.getElementById('markdown-content');
+                const headings = markdownContent.querySelectorAll('h2, h3');
+                headings.forEach(h => {
+                    const wrapper = document.createElement('div');
+                    wrapper.className = 'flex items-center gap-4 hairline-b border-ink-black pb-2 mb-6 mt-12 not-prose';
+                    
+                    const newH = document.createElement(h.tagName);
+                    newH.className = 'text-headline-md font-headline-md m-0 text-ink-black';
+                    newH.innerHTML = h.innerHTML;
+                    
+                    wrapper.appendChild(newH);
+                    
+                    h.parentNode.replaceChild(wrapper, h);
+                });
+                
+                // Render KaTeX
+                const renderMath = () => {
+                    if (window.renderMathInElement) {
+                        renderMathInElement(markdownContent, {
+                          delimiters: [
+                              {left: '$$', right: '$$', display: true},
+                              {left: '$', right: '$', display: false},
+                              {left: '\\(', right: '\\)', display: false},
+                              {left: '\\[', right: '\\]', display: true}
+                          ],
+                          throwOnError: false
+                        });
+                    } else {
+                        setTimeout(renderMath, 100);
+                    }
+                };
+                renderMath();
             })
             .catch(error => {
                 console.error('Error fetching markdown:', error);
