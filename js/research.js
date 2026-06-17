@@ -1,6 +1,8 @@
+import { researchData } from './data.js';
+
 let selectedId = null;
 
-function toggleSidebar() {
+window.toggleSidebar = function() {
     const sidebar = document.getElementById('research-sidebar');
     const toggleIcon = document.getElementById('toggle-icon');
     if (sidebar.style.display === 'none') {
@@ -37,7 +39,7 @@ function renderList() {
     `).join('');
 }
 
-function selectItem(id) {
+window.selectItem = function(id) {
     selectedId = id;
     renderList();
     
@@ -114,8 +116,6 @@ function selectItem(id) {
             <div id="markdown-content" class="prose prose-stone max-w-none w-full font-body-lg text-ink-black"></div>
         </div>
     `;
-
-    // Fetch and render markdown content if available
     if (item.contentFile) {
         fetch(item.contentFile)
             .then(response => {
@@ -140,8 +140,6 @@ function selectItem(id) {
                         mermaid.run({nodes: newMermaidBlocks});
                     }
                 }
-                
-                // Format headings
                 const markdownContent = document.getElementById('markdown-content');
                 const headings = markdownContent.querySelectorAll('h2, h3');
                 headings.forEach(h => {
@@ -156,8 +154,6 @@ function selectItem(id) {
                     
                     h.parentNode.replaceChild(wrapper, h);
                 });
-                
-                // Render KaTeX
                 const renderMath = () => {
                     if (window.renderMathInElement) {
                         renderMathInElement(markdownContent, {
@@ -180,8 +176,6 @@ function selectItem(id) {
                 document.getElementById('markdown-content').innerHTML = '';
             });
     }
-
-    // Scroll to top when switching articles
     detailEl.scrollTop = 0;
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -189,3 +183,4 @@ function selectItem(id) {
 document.addEventListener("DOMContentLoaded", () => {
     loadData();
 });
+

@@ -2,90 +2,24 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8" />
+        <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>ReForceMind</title>
     <link rel="icon" type="image/png" href="favicon.png">
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries,typography"></script>
+    <script src="tailwind.config.js"></script>
+    
     <link href="https://fonts.googleapis.com" rel="preconnect" />
     <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
-    <link
-        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&amp;family=Libre+Franklin:wght@400&amp;family=Newsreader:wght@500;600&amp;display=swap"
-        rel="stylesheet" />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
-        rel="stylesheet" />
-    <script src="js/tailwind.config.js"></script>
-    <style>
-        .material-symbols-outlined {
-            font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        .markdown-body h2 {
-            font-family: "Newsreader", serif;
-            font-size: 32px;
-            font-weight: 500;
-            border-bottom: 0.5px solid #000;
-            padding-bottom: 12px;
-            margin-top: 48px;
-            margin-bottom: 24px;
-        }
-
-        .markdown-body h3 {
-            font-family: "JetBrains Mono", monospace;
-            font-size: 13px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-top: 32px;
-            margin-bottom: 16px;
-            color: #4c6c50;
-        }
-
-        .markdown-body h2 {
-            font-family: "Newsreader", serif;
-            font-size: 24px;
-            font-weight: 500;
-            border-bottom: 0.5px solid #000;
-            padding-bottom: 12px;
-            margin-top: 32px;
-            margin-bottom: 16px;
-        }
-
-        @media (min-width: 768px) {
-            .markdown-body h2 {
-                font-size: 32px;
-                margin-top: 48px;
-                margin-bottom: 24px;
-            }
-        }
-
-        .markdown-body p {
-            margin-bottom: 24px;
-            line-height: 1.6;
-        }
-
-        .markdown-body ul {
-            list-style-type: square;
-            padding-left: 24px;
-            margin-bottom: 24px;
-        }
-
-        .markdown-body li {
-            margin-bottom: 8px;
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&amp;family=Libre+Franklin:wght@400;500;600;700&amp;family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600;6..72,700&amp;display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet" />
 </head>
 
 <body
     class="bg-parchment-base text-ink-black font-body-md antialiased min-h-screen flex flex-col relative overflow-x-hidden">
-    <div class="fixed inset-0 pointer-events-none z-0"
-        style="background-image: linear-gradient(to right, rgba(0,0,0,0.06) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,0,0,0.06) 1px, transparent 1px); background-size: 64px 64px;">
-    </div>
+    <div class="fixed inset-0 pointer-events-none z-0 bg-grid-pattern"></div>
 
     <div id="navbar-placeholder"></div>
 
@@ -121,8 +55,13 @@
     </main>
 
     <div id="footer-placeholder"></div>
-
     <script src="js/components.js"></script>
 </body>
 
 </html>
+
+
+
+
+
+

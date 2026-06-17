@@ -1,12 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
+        <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>ReForceMind</title>
     <link rel="icon" type="image/png" href="favicon.png">
+    
+    <link rel="stylesheet" href="css/style.css">
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries,typography"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700&amp;family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600;6..72,700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet" />
+    <script src="tailwind.config.js"></script>
+    
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&amp;family=Libre+Franklin:wght@400;500;600;700&amp;family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600;6..72,700&amp;display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/marked@4.3.0/marked.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
@@ -18,38 +24,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
-    <script src="js/tailwind.config.js"></script>
-    <style type="text/tailwindcss">
-        @layer utilities {
-            .hairline-b { border-bottom-width: 0.5px; }
-            .hairline-t { border-top-width: 0.5px; }
-            .hairline-r { border-right-width: 0.5px; }
-            .hairline-l { border-left-width: 0.5px; }
-            
-            .master-list-item {
-                @apply transition-all duration-300 cursor-pointer;
-            }
-            .master-list-item:hover {
-                @apply bg-parchment-deep bg-opacity-30;
-            }
-            .master-list-item.active {
-                @apply bg-ink-black text-parchment-base;
-            }
-            .master-list-item.active .text-ink-black {
-                @apply text-parchment-base;
-            }
-            .master-list-item.active .text-on-surface-variant {
-                @apply text-surface-variant;
-            }
-            .content-wash {
-                background: radial-gradient(circle at 50% 50%, rgba(122, 26, 26, 0.03) 0%, transparent 60%),
-                            radial-gradient(circle at 100% 0%, rgba(45, 75, 50, 0.03) 0%, transparent 50%);
-            }
-        }
-        .material-symbols-outlined {
-            font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
-        }
-    </style>
 </head>
 <body class="bg-parchment-base text-ink-black font-body-lg min-h-screen flex flex-col selection:bg-crimson-authority selection:text-white">
     <div id="navbar-placeholder"></div>
@@ -103,9 +77,14 @@
     </main>
 
     <div id="footer-placeholder"></div>
-    
-    <script src="js/data.js"></script>
     <script src="js/components.js"></script>
-    <script src="js/research.js"></script>
+    
+    <script type="module" src="js/research.js"></script>
 </body>
 </html>
+
+
+
+
+
+

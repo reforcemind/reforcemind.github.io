@@ -1,3 +1,5 @@
+import { rolesData } from './data.js';
+
 let expandedRoleId = null;
 let isInitialized = false;
 
@@ -58,7 +60,7 @@ function loadRoles() {
     setTimeout(updateRolesLayout, 50);
 }
 
-function handleRoleClick(id) {
+window.handleRoleClick = function(id) {
     if (window.innerWidth < 768) {
         if(id) openModal(id);
     } else {
@@ -202,7 +204,7 @@ function updateRolesLayout() {
     wrapper.style.height = `${maxContainerHeight}px`;
 }
 
-function openModal(id) {
+window.openModal = function(id) {
     const role = rolesData.find(r => r.id === id);
     if(!role) return;
     
@@ -223,7 +225,7 @@ function openModal(id) {
     document.body.style.overflow = 'hidden';
 }
 
-function closeModal() {
+window.closeModal = function() {
     const modal = document.getElementById('role-modal');
     const content = document.getElementById('modal-content');
     
@@ -240,3 +242,4 @@ function closeModal() {
 document.addEventListener("DOMContentLoaded", () => {
     loadRoles();
 });
+
