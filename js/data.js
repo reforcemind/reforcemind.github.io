@@ -17,6 +17,24 @@ export const researchData = [
             huggingface: "https://huggingface.co/collections/ReForceMind/reversible-flow-adaptation"
         },
         contentFile: "js/posts/ref-001/ref-001.md"
+    },
+    {
+        id: "REF-002",
+        date: "June 2026",
+        title: "NetForge RL: Multi-Agent Cybersecurity Environment",
+        authors: "Research Team",
+        type: "Environment Release",
+        publishedDate: "June 19, 2026",
+        fullAuthors: "ReForceMind Research Team",
+        abstract: [
+            "We introduce NetForge RL, a Multi-Agent Reinforcement Learning environment where Red agents attack a network and Blue agents defend it.",
+            "Built on PettingZoo with a JAX backend, NetForge offers fast vectorized training, partial observability, realistic telemetry, and MITRE ATT&CK alignment, paving the way for advanced LLM and RL-based cybersecurity agents."
+        ],
+        links: {
+            github: "https://github.com/reforcemind/NetForge_RL",
+            website: "https://reforcemind.github.io/NetForge_RL/"
+        },
+        contentFile: "js/posts/ref-002/ref-002.md"
     }
 ];
 
