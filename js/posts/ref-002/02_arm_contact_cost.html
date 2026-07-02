@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
+<style>
+  body, html { background: transparent !important; margin: 0; padding: 0; }
+  .js-plotly-plot .plotly .bg,
+  .js-plotly-plot .plotly .plotbg,
+  rect.bg { fill: transparent !important; }
+</style>
+</head>
+<body>
+<div id="plot" style="width:100%;height:460px;"></div>
+<script>
+var Ns   = [4, 8, 12];
+var NStr = ['4', '8', '12'];
+
+var C = {
+  fd:   'rgba(155,148,144,0.85)',
+  adp:  'rgba(44,94,138,0.85)',
+  gt:   'rgba(42,127,98,0.85)',
+  hyb:  'rgba(91,74,138,0.85)',
+  rnk:  'rgba(185,64,64,0.78)',
+};
+var CL = {
+  fd:  'rgba(120,113,110,1)',
+  adp: 'rgba(28,62,96,1)',
+  gt:  'rgba(22,88,64,1)',
+  hyb: 'rgba(58,44,108,1)',
+  rnk: 'rgba(148,30,30,1)',
+};
+
+function bar(name, ys, color, lcolor) {
+  return {
+    name: name,
+    x: NStr,
+    y: ys,
+    type: 'bar',
+    marker: { color: color, line: { color: lcolor, width: 1.4 } },
+    text: ys.map(String),
+    textposition: 'outside',
+    textfont: { size: 11, family: 'ui-monospace, monospace', color: lcolor },
+    cliponaxis: false,
+  };
+}
+
+var data = [
+  bar('FD baseline',   [108, 202, 290], C.fd,  CL.fd),
+  bar('Adaptive',      [119, 187, 268], C.adp, CL.adp),
+  bar('Group Testing', [80,   90, 103], C.gt,  CL.gt),
+  bar('Hybrid',        [147, 104, 128], C.hyb, CL.hyb),
+  bar('Rank-R (Nyström)', [255, 449, 670], C.rnk, CL.rnk),
+];
+
+var layout = {
+  barmode: 'group',
+  bargap: 0.15,
+  bargroupgap: 0.05,
+  annotations: [
+    {
+      text: 'Nyström overhead<br>dominates at small N',
+      x: '12', y: 670, xref: 'x', yref: 'y',
+      ax: 56, ay: -32,
+      arrowhead: 2, arrowsize: 0.9, arrowwidth: 1.2,
+      arrowcolor: CL.rnk,
+      font: { size: 10, color: CL.rnk, family: 'ui-sans-serif, sans-serif' },
+      bgcolor: 'rgba(255,255,255,0.75)', borderpad: 3,
+    },
+    {
+      text: 'Density screen → secant<br>(no full rebuild)',
+      x: '8', y: 90, xref: 'x', yref: 'y',
+      ax: -60, ay: -44,
+      arrowhead: 2, arrowsize: 0.9, arrowwidth: 1.2,
+      arrowcolor: CL.gt,
+      font: { size: 10, color: CL.gt, family: 'ui-sans-serif, sans-serif' },
+      bgcolor: 'rgba(255,255,255,0.75)', borderpad: 3,
+    },
+  ],
+  xaxis: {
+    title: { text: 'State dimension N', font: { size: 12.5, color: '#3a3632' } },
+    tickfont: { size: 12, family: 'ui-monospace, monospace', color: '#3a3632' },
+    showgrid: false, zeroline: false,
+  },
+  yaxis: {
+    title: { text: 'Total JVPs (20 outer steps, 5 seeds)', font: { size: 12.5, color: '#3a3632' } },
+    gridcolor: 'rgba(200,196,192,0.45)', gridwidth: 1,
+    zeroline: false,
+    tickfont: { size: 11, color: '#3a3632', family: 'ui-monospace, monospace' },
+    rangemode: 'tozero',
+  },
+  title: {
+    text: 'Recovery cost — arm contact event (rank-≈1 dense jump, all methods converge)',
+    font: { size: 14, color: '#1a1917', family: 'ui-sans-serif, sans-serif' },
+    x: 0.5, xanchor: 'center',
+  },
+  paper_bgcolor: 'rgba(0,0,0,0)',
+  plot_bgcolor:  'rgba(0,0,0,0)',
+  margin: { t: 54, r: 24, b: 52, l: 72 },
+  legend: {
+    x: 0.01, y: 0.97, bgcolor: 'rgba(255,255,255,0.6)',
+    bordercolor: 'rgba(180,175,170,0.5)', borderwidth: 1,
+    font: { size: 11.5, color: '#1a1917', family: 'ui-sans-serif, sans-serif' },
+  },
+  font: { family: 'ui-sans-serif, sans-serif' },
+};
+
+Plotly.newPlot('plot', data, layout, { displayModeBar: false, responsive: true });
+</script>
+</body>
+</html>

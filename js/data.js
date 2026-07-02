@@ -1,22 +1,17 @@
 export const researchData = [
     {
         id: "REF-001",
-        date: "May 2026",
-        title: "Flow-Matched Distillation & Reversible Flow Adaptation",
+        date: "July 2026",
+        title: "Structure-Adaptive Jacobian Recovery for Receding-Horizon MPC",
         authors: "Research Team",
-        type: "Empirical Evaluation",
-        publishedDate: "May 28, 2026",
+        type: "Algorithm Release",
+        publishedDate: "July 02, 2026",
         fullAuthors: "ReForceMind Research Team",
         abstract: [
-            "Evaluation of Flow-Matched Distillation and Reversible Flow Adaptation across Quadruped Locomotion and Panda Manipulation. We demonstrate hardware efficiency and out-of-distribution generalization capabilities for edge deployment.",
-            "This report details the projection manifold validation and hardware constraints encountered when distilling continuous flow dynamics into reversible architectures. We analyze training convergence and latency trade-offs, proving that flow-matched architectures can operate within metabolic budgets without sacrificing manipulation precision or locomotion stability."
+            "We present a structure-adaptive recovery pipeline for quasi-Newton solvers in receding-horizon MPC, built around two empirically characterised discontinuity archetypes: column-sparse gear events and rank-≈1 dense contact events.",
+            "A tracking-error subspace detector triggers recovery; a density pre-screen routes to binary-splitting group testing (Θ(r log N/r) JVPs) or a secant continuation. On a coupled chain at N=64, the Adaptive solver achieves a 10.3× reduction in JVPs over finite differences; the Hybrid solver resolves N=32 coupling instability at 4.2× below FD."
         ],
-        links: {
-            github: "https://github.com/reforcemind/Reversible-Flow-Adaptation",
-            weights: "resources.html",
-            huggingface: "https://huggingface.co/collections/ReForceMind/reversible-flow-adaptation"
-        },
-        contentFile: "js/posts/ref-001/ref-001.md"
+        contentFile: "js/posts/ref-002/ref-002.md"
     },
     {
         id: "REF-002",
@@ -34,7 +29,7 @@ export const researchData = [
             github: "https://github.com/reforcemind/NetForge_RL",
             website: "https://reforcemind.github.io/NetForge_RL/"
         },
-        contentFile: "js/posts/ref-002/ref-002.md"
+        contentFile: "js/posts/ref-001/ref-001.md"
     }
 ];
 
