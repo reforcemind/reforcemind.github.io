@@ -24,7 +24,7 @@ async function loadComponents() {
             document.getElementById('footer-placeholder').innerHTML = await footRes.text();
         }
     } catch (e) {
-        console.error('Error loading components:', e);
+        console.error('Error', e);
     }
 }
 document.addEventListener('DOMContentLoaded', loadComponents);
