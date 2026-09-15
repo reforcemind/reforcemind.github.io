@@ -16,6 +16,12 @@ async function loadComponents() {
                     el.classList.add('text-crimson-authority', 'font-bold', 'border-b', 'border-crimson-authority');
                     el.classList.remove('text-on-surface-variant');
                 }
+            } else if (currentUrl.includes('flowedge.html')) {
+                const el = document.getElementById('nav-flowedge');
+                if (el) {
+                    el.classList.add('text-crimson-authority', 'font-bold', 'border-b', 'border-crimson-authority');
+                    el.classList.remove('text-on-surface-variant');
+                }
             }
         }
         
