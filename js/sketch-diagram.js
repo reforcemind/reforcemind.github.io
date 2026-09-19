@@ -210,3 +210,55 @@ export function drawNetforge(host) {
 
     note(svg, 480, 448, "same seed  →  same episode. MITRE tags, not exploit code.", 308);
 }
+
+export function drawNetforgeObserve(host) {
+    if (!host) return;
+    const svg = board(host, "0 0 960 400");
+    svg.setAttribute("aria-label", "Information split: red must recon the true graph, blue only reads a delayed SIEM feed");
+
+    box(svg, { x: 28, y: 150, w: 200, h: 112, title: "red_operator", sub: "recon, then exploit", fill: "#f7d7d4", hatch: "url(#hatch-red)", seed: 12 });
+    box(svg, { x: 320, y: 78, w: 280, h: 150, title: "true graph", sub: "DMZ · corp · OT", fill: "#dcecdc", hatch: "url(#hatch-green)", seed: 33 });
+    box(svg, { x: 700, y: 40, w: 220, h: 100, title: "SIEM feed", sub: "filtered · delayed", fill: "#fff6e4", hatch: "url(#hatch-sand)", seed: 54 });
+    box(svg, { x: 700, y: 230, w: 220, h: 120, title: "blue × 3", sub: "never sees the graph", fill: "#e7eef8", hatch: "url(#hatch-blue)", seed: 71 });
+
+    arrow(svg, 228, 206, 320, 160, 401);
+    arrow(svg, 600, 130, 700, 90, 402);
+    arrow(svg, 810, 140, 810, 230, 403);
+
+    note(svg, 274, 248, "must recon first", 404, "middle");
+    note(svg, 480, 360, "two worlds, one seed. Blue trains on the feed, not the topology.", 405);
+}
+
+export function drawNetforgeDurative(host) {
+    if (!host) return;
+    const svg = board(host, "0 0 960 300");
+    svg.setAttribute("aria-label", "Durative action timeline: red exploit is in flight until blue isolate cancels it");
+
+    box(svg, { x: 24, y: 88, w: 200, h: 108, title: "t = 0", sub: "red starts exploit", fill: "#f7d7d4", hatch: "url(#hatch-red)", seed: 21 });
+    box(svg, { x: 268, y: 88, w: 196, h: 108, title: "in flight", sub: "red is busy", fill: "#fff6e4", hatch: "url(#hatch-sand)", seed: 37 });
+    box(svg, { x: 508, y: 88, w: 200, h: 108, title: "blue isolate", sub: "cancels it", fill: "#e7eef8", hatch: "url(#hatch-blue)", seed: 52 });
+    box(svg, { x: 752, y: 88, w: 184, h: 108, title: "next tick", sub: "new action window", fill: "#dcecdc", hatch: "url(#hatch-green)", seed: 68 });
+
+    arrow(svg, 224, 142, 268, 142, 501);
+    arrow(svg, 464, 142, 508, 142, 502);
+    arrow(svg, 708, 142, 752, 142, 503);
+
+    note(svg, 480, 44, "actions take time. isolate on that host kills the in-flight exploit.", 504);
+    note(svg, 480, 258, "this is why a 1-step gym is the wrong abstraction for a SOC.", 505);
+}
+
+const DIAGRAMS = {
+    "netforge-loop": drawNetforge,
+    "netforge-observe": drawNetforgeObserve,
+    "netforge-time": drawNetforgeDurative,
+    flowedge: drawFlowedge
+};
+
+export function mountDiagrams(root = document) {
+    root.querySelectorAll("[data-diagram]").forEach((host) => {
+        const fn = DIAGRAMS[host.dataset.diagram];
+        if (!fn) return;
+        fn(host);
+        host.classList.add("is-live");
+    });
+}

@@ -1,17 +1,15 @@
-import { researchData } from './data.js?v=10';
+import { researchData } from './data.js?v=14';
+import { mountDiagrams } from './sketch-diagram.js?v=9';
 
 let selectedId = null;
 
 window.toggleSidebar = function() {
     const sidebar = document.getElementById('research-sidebar');
     const toggleIcon = document.getElementById('toggle-icon');
-    if (sidebar.style.display === 'none') {
-        sidebar.style.display = '';
-        if(toggleIcon) toggleIcon.innerText = 'keyboard_double_arrow_left';
-    } else {
-        sidebar.style.display = 'none';
-        if(toggleIcon) toggleIcon.innerText = 'keyboard_double_arrow_right';
-    }
+    const collapsed = !document.body.classList.contains('sidebar-collapsed');
+    document.body.classList.toggle('sidebar-collapsed', collapsed);
+    if (sidebar) sidebar.classList.toggle('is-collapsed', collapsed);
+    if (toggleIcon) toggleIcon.innerText = collapsed ? 'keyboard_double_arrow_right' : 'keyboard_double_arrow_left';
 }
 
 function loadData() {
@@ -27,7 +25,7 @@ function loadData() {
         }
         if (detailEl) {
             detailEl.innerHTML = `
-                <div class="max-w-2xl mx-auto w-full py-16">
+                <div class="max-w-2xl mx-auto w-full py-16 paper-sheet">
                     <p class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant mb-4">Archive</p>
                     <h1 class="font-headline-lg text-4xl mb-4">Nothing published here yet.</h1>
                     <p class="text-on-surface-variant text-lg leading-relaxed">Notes and papers will land in this index when they are ready. FlowEdge and NetForge are on the product pages.</p>
@@ -66,11 +64,37 @@ window.selectItem = function(id) {
     if(!item) return;
 
     const detailEl = document.getElementById('research-detail');
-    const isSidebarHidden = document.getElementById('research-sidebar') && document.getElementById('research-sidebar').style.display === 'none';
+    const isSidebarHidden = document.body.classList.contains('sidebar-collapsed');
     const toggleIconText = isSidebarHidden ? 'keyboard_double_arrow_right' : 'keyboard_double_arrow_left';
+    const essay = item.format === "substack";
 
-    detailEl.innerHTML = `
-        <div class="max-w-4xl mx-auto w-full flex flex-col gap-10">
+    const links = `
+        ${item.links?.pdf ? `<a href="${item.links.pdf}" target="_blank" rel="noopener">arXiv</a>` : ""}
+        ${item.links?.github ? `<a href="${item.links.github}" target="_blank" rel="noopener">NetForge_RL</a>` : ""}
+    `;
+
+    if (essay) {
+        detailEl.innerHTML = `
+            <article class="essay">
+                <div class="essay-top">
+                    <button type="button" onclick="toggleSidebar()" class="essay-toggle" title="Toggle Sidebar">
+                        <span id="toggle-icon" class="material-symbols-outlined text-xl">${toggleIconText}</span>
+                    </button>
+                    <p class="essay-kicker">${item.type} · ${item.readMinutes || 10} min read</p>
+                </div>
+                <h1>${item.title}</h1>
+                ${item.dek ? `<p class="essay-dek">${item.dek}</p>` : ""}
+                <p class="essay-byline">
+                    <span>${item.fullAuthors}</span>
+                    <span>${item.publishedDate}</span>
+                    <span class="essay-links">${links}</span>
+                </p>
+                <div id="markdown-content" class="essay-body"></div>
+            </article>
+        `;
+    } else {
+        detailEl.innerHTML = `
+                <div class="max-w-4xl mx-auto w-full flex flex-col gap-10 paper-sheet">
             <div class="flex flex-col gap-6 w-full">
                 <div class="flex gap-4 items-center">
                     <button onclick="toggleSidebar()" class="bg-transparent border border-ink-black text-ink-black w-8 h-8 flex-shrink-0 rounded-lg hover:bg-parchment-deep transition-colors flex items-center justify-center cursor-pointer mr-2" title="Toggle Sidebar">
@@ -85,7 +109,6 @@ window.selectItem = function(id) {
                     <p class="text-body-md font-body-md text-ink-black">${item.fullAuthors}</p>
                 </div>
             </div>
-            
             <div class="w-full flex flex-col gap-6">
                 <div class="flex items-center gap-4 hairline-b border-ink-black pb-2 mb-4">
                     <span class="material-symbols-outlined text-ochre-discovery">article</span>
@@ -93,58 +116,29 @@ window.selectItem = function(id) {
                 </div>
                 ${item.abstract.map(p => `<p class="text-body-lg font-body-lg text-ink-black leading-relaxed">${p}</p>`).join('')}
             </div>
-            
-            <div class="flex flex-wrap gap-4">
-                ${item.links && item.links.pdf ? `
-                <a href="${item.links.pdf}" target="_blank" class="bg-ink-black text-parchment-base px-6 py-3 rounded-lg flex items-center gap-2 hover:bg-forest-intellect transition-colors">
-                    <span class="material-symbols-outlined text-sm">download</span>
-                    <span class="text-technical-sm font-technical-sm uppercase tracking-wider">Read PDF</span>
-                </a>` : ''}
-                ${item.links && item.links.github ? `
-                <a href="${item.links.github}" target="_blank" class="bg-transparent border border-ink-black text-ink-black px-6 py-3 rounded-lg flex items-center gap-2 hover:bg-parchment-deep transition-colors">
-                    <span class="material-symbols-outlined text-sm">code</span>
-                    <span class="text-technical-sm font-technical-sm uppercase tracking-wider">View GitHub</span>
-                </a>` : ''}
-                ${item.links && item.links.github2 ? `
-                <a href="${item.links.github2}" target="_blank" class="bg-transparent border border-ink-black text-ink-black px-6 py-3 rounded-lg flex items-center gap-2 hover:bg-parchment-deep transition-colors">
-                    <span class="material-symbols-outlined text-sm">code</span>
-                    <span class="text-technical-sm font-technical-sm uppercase tracking-wider">GitHub (CT-GMARL)</span>
-                </a>` : ''}
-                ${item.links && item.links.weights ? `
-                <a href="${item.links.weights}" class="bg-transparent border border-ink-black text-ink-black px-6 py-3 rounded-lg flex items-center gap-2 hover:bg-parchment-deep transition-colors">
-                    <span class="material-symbols-outlined text-sm">database</span>
-                    <span class="text-technical-sm font-technical-sm uppercase tracking-wider">Model Weights</span>
-                </a>` : ''}
-                ${item.links && item.links.huggingface ? `
-                <a href="${item.links.huggingface}" target="_blank" class="bg-transparent border border-ink-black text-ink-black px-6 py-3 rounded-lg flex items-center gap-2 hover:bg-parchment-deep transition-colors">
-                    <span class="material-symbols-outlined text-sm">dataset</span>
-                    <span class="text-technical-sm font-technical-sm uppercase tracking-wider">Datasets</span>
-                </a>` : ''}
-            </div>
-            
-            ${item.image ? `
-            <div class="w-full h-64 bg-surface-variant relative overflow-hidden flex items-center justify-center border border-ink-black">
-                <div class="absolute inset-0 opacity-20 bg-cover bg-center" style="background-image: url('${item.image}');"></div>
-                <div class="z-10 text-center">
-                    <span class="material-symbols-outlined text-4xl text-ink-black mb-2">schema</span>
-                    <p class="text-technical-sm font-technical-sm uppercase tracking-widest">${item.caption || ''}</p>
-                </div>
-            </div>
-            ` : ''}
-            
+            <div class="flex flex-wrap gap-4">${links}</div>
             <div id="markdown-content" class="prose prose-stone max-w-none w-full font-body-lg text-ink-black"></div>
         </div>
-    `;
+        `;
+    }
     if (item.contentFile) {
-        fetch(item.contentFile)
+        fetch(`${item.contentFile}?v=5`)
             .then(response => {
                 if (!response.ok) throw new Error('Network response was not ok');
                 return response.text();
             })
             .then(text => {
-                document.getElementById('markdown-content').innerHTML = marked.parse(text);
-                
-                if (typeof mermaid !== 'undefined') {
+                const markdownContent = document.getElementById('markdown-content');
+                if (typeof marked !== "undefined") {
+                    marked.setOptions({ gfm: true, breaks: false });
+                    markdownContent.innerHTML = marked.parse(text);
+                } else {
+                    markdownContent.innerHTML = text;
+                }
+
+                mountDiagrams(markdownContent);
+
+                if (!essay && typeof mermaid !== 'undefined') {
                     const mermaidBlocks = document.querySelectorAll('code.language-mermaid');
                     mermaidBlocks.forEach(block => {
                         const pre = block.parentElement;
@@ -153,26 +147,23 @@ window.selectItem = function(id) {
                         div.textContent = block.textContent;
                         pre.parentElement.replaceChild(div, pre);
                     });
-                    
                     const newMermaidBlocks = document.querySelectorAll('.mermaid');
                     if (newMermaidBlocks.length > 0) {
                         mermaid.run({nodes: newMermaidBlocks});
                     }
                 }
-                const markdownContent = document.getElementById('markdown-content');
-                const headings = markdownContent.querySelectorAll('h2, h3');
-                headings.forEach(h => {
-                    const wrapper = document.createElement('div');
-                    wrapper.className = 'flex items-center gap-4 hairline-b border-ink-black pb-2 mb-6 mt-12 not-prose';
-                    
-                    const newH = document.createElement(h.tagName);
-                    newH.className = 'text-headline-md font-headline-md m-0 text-ink-black';
-                    newH.innerHTML = h.innerHTML;
-                    
-                    wrapper.appendChild(newH);
-                    
-                    h.parentNode.replaceChild(wrapper, h);
-                });
+                if (!essay) {
+                    const headings = markdownContent.querySelectorAll('h2, h3');
+                    headings.forEach(h => {
+                        const wrapper = document.createElement('div');
+                        wrapper.className = 'flex items-center gap-4 hairline-b border-ink-black pb-2 mb-6 mt-12 not-prose';
+                        const newH = document.createElement(h.tagName);
+                        newH.className = 'text-headline-md font-headline-md m-0 text-ink-black';
+                        newH.innerHTML = h.innerHTML;
+                        wrapper.appendChild(newH);
+                        h.parentNode.replaceChild(wrapper, h);
+                    });
+                }
                 const renderMath = () => {
                     if (window.renderMathInElement) {
                         renderMathInElement(markdownContent, {

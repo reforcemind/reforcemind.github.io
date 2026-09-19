@@ -303,13 +303,41 @@ export const collab = [
   }
 ];
 
-export const researchData = [];
+export const researchData = [
+  {
+    id: "PAPER-001",
+    type: "ESSAY",
+    format: "substack",
+    title: "Don't train the defender on the true graph",
+    dek: "Security teams watch alerts, not a map of every machine. A lot of training setups forget that, treat isolation as instant, and then celebrate mean reward.",
+    date: "2026.04",
+    publishedDate: "10 April 2026",
+    readMinutes: 14,
+    authors: "I. Jankowski",
+    fullAuthors: "Igor Jankowski",
+    project: "netforge",
+    abstract: [
+      "A simulated defender can raise its score by taking the whole subnet offline, or by using a map of the network that a real analyst would never have. This article explains the setting for people outside the subfield, then walks through observation, action duration, and team structure, and how I evaluate so those shortcuts show up. Examples use NetForge_RL."
+    ],
+    links: {
+      pdf: "https://arxiv.org/abs/2604.09523",
+      github: "https://github.com/reforcemind/NetForge_RL",
+      product: "netforge.html"
+    },
+    contentFile: "js/posts/paper-netforge.md"
+  }
+];
 
 export const directory = [
   {
     path: "research/",
     href: "research.html",
     comment: "archive"
+  },
+  {
+    path: "research/netforge-rl.md",
+    href: "research.html#PAPER-001",
+    comment: "arXiv:2604.09523"
   },
   {
     path: "projects/flowedge/",

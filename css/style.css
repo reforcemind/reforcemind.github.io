@@ -60,7 +60,7 @@ body { overflow-x: hidden; }
 .flora {
   position: fixed;
   pointer-events: none;
-  z-index: 0;
+  z-index: -1;
   mix-blend-mode: multiply;
   animation: flora-drift 14s ease-in-out infinite;
 }
@@ -81,7 +81,7 @@ body { overflow-x: hidden; }
   position: fixed;
   inset: 0;
   pointer-events: none;
-  z-index: 0;
+  z-index: -1;
   background-image: url("../assets/dither/plant.png");
   background-repeat: no-repeat;
   background-size: 220px;
@@ -537,4 +537,238 @@ body { overflow-x: hidden; }
   .js .section-stage > section.is-on { animation: none; }
   .perf-fill { width: 100%; animation: none !important; }
   .lift:hover { transform: none; }
+}
+
+.essay {
+  max-width: 42rem;
+  width: 100%;
+  margin: 0 auto;
+  padding: 2.25rem 1.85rem 4rem;
+  position: relative;
+  z-index: 5;
+  isolation: isolate;
+  font-family: "Newsreader", Georgia, serif;
+  font-size: 20px;
+  line-height: 1.72;
+  color: #1a1208;
+  background: #fcefd4;
+  border: 0.5px solid rgba(26, 18, 8, 0.12);
+  box-shadow:
+    0 0 56px 36px rgba(252, 239, 212, 0.95),
+    0 14px 40px rgba(26, 18, 8, 0.1);
+  transition: max-width 0.35s ease, padding 0.35s ease;
+}
+#research-sidebar.is-collapsed {
+  width: 0 !important;
+  min-width: 0 !important;
+  max-width: 0 !important;
+  opacity: 0;
+  overflow: hidden;
+  border-width: 0;
+  pointer-events: none;
+  flex-shrink: 0;
+}
+body.sidebar-collapsed .essay,
+body.sidebar-collapsed .paper-sheet {
+  max-width: min(72rem, 100%);
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+}
+body.sidebar-collapsed #research-detail > .max-w-4xl,
+body.sidebar-collapsed #research-detail > .max-w-2xl {
+  max-width: min(72rem, 100%);
+}
+.essay-toggle {
+  position: static;
+  background: transparent;
+  border: 0.5px solid #000;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.essay-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.essay-kicker {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #7A1A1A;
+  margin: 0;
+}
+.essay h1 {
+  font-family: "Newsreader", serif;
+  font-size: clamp(2.1rem, 5vw, 3.4rem);
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  margin: 0 0 14px;
+}
+.essay-dek {
+  font-size: 1.25rem;
+  line-height: 1.45;
+  color: #5c5346;
+  font-style: italic;
+  margin: 0 0 1.4rem;
+}
+.essay-byline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: #5c5346;
+  border-top: 0.5px solid #000;
+  border-bottom: 0.5px solid #000;
+  padding: 12px 0;
+  margin: 0 0 2.2rem;
+}
+.essay-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-left: auto;
+}
+.essay-links a {
+  color: #7A1A1A;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.essay-body > p:first-of-type::first-letter {
+  float: left;
+  font-size: 4.4rem;
+  line-height: 0.78;
+  padding: 0.08em 0.1em 0 0;
+  font-weight: 600;
+}
+.essay-body p,
+.essay h1,
+.essay-dek,
+.essay-body h2,
+.essay-body li,
+.essay-kicker,
+.essay-byline,
+.essay-fig figcaption {
+  text-shadow: 0 0 10px rgba(252, 239, 212, 1), 0 1px 0 rgba(252, 239, 212, 0.9);
+}
+.essay-body p { margin: 0 0 1.35em; }
+.essay-body a { color: #7A1A1A; text-decoration: underline; text-underline-offset: 3px; }
+#research-detail {
+  position: relative;
+  z-index: 5;
+  isolation: isolate;
+  background: linear-gradient(
+    180deg,
+    rgba(252, 239, 212, 0.72) 0%,
+    rgba(252, 239, 212, 0.42) 22%,
+    rgba(252, 239, 212, 0.42) 100%
+  );
+}
+.paper-sheet {
+  background: #fcefd4;
+  border: 0.5px solid rgba(26, 18, 8, 0.12);
+  box-shadow:
+    0 0 56px 36px rgba(252, 239, 212, 0.95),
+    0 14px 40px rgba(26, 18, 8, 0.1);
+  padding: 2rem 1.75rem 3rem;
+  position: relative;
+  z-index: 5;
+  isolation: isolate;
+}
+.essay-body h2 {
+  font-family: "Newsreader", serif;
+  font-size: 1.65rem;
+  font-weight: 600;
+  line-height: 1.25;
+  margin: 2.4rem 0 0.9rem;
+  padding-top: 0.4rem;
+}
+.essay-body h3 {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin: 1.8rem 0 0.6rem;
+  color: #2D4B32;
+}
+.essay-body blockquote {
+  border-left: 3px solid #7A1A1A;
+  margin: 2rem 0;
+  padding: 0.2rem 0 0.2rem 1.2rem;
+  font-style: italic;
+  font-size: 1.35rem;
+  line-height: 1.4;
+  color: #1a1208;
+}
+.essay-body ul { margin: 0 0 1.4em; padding-left: 1.2rem; list-style: square; }
+.essay-body li { margin-bottom: 0.4em; }
+.essay-body pre {
+  background: #111;
+  color: #fcefd4;
+  padding: 16px 18px;
+  overflow-x: auto;
+  font-size: 13px;
+  line-height: 1.5;
+  margin: 0 0 1.6em;
+  border: 0.5px solid #000;
+}
+.essay-body code {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.78em;
+}
+.essay-body p code, .essay-body li code, .essay-body td code {
+  background: rgba(0,0,0,0.06);
+  padding: 0.1em 0.35em;
+}
+.essay-body pre code { background: transparent; padding: 0; color: inherit; font-size: 12px; }
+.essay-body table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  line-height: 1.45;
+  margin: 0.4rem 0 2rem;
+  border: 0.5px solid #000;
+  font-family: "Libre Franklin", sans-serif;
+}
+.essay-body th, .essay-body td {
+  padding: 10px 12px;
+  border-bottom: 0.5px solid rgba(0,0,0,0.12);
+  text-align: left;
+  vertical-align: top;
+}
+.essay-body th {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: rgba(245, 214, 160, 0.45);
+}
+.essay-body tr:last-child td { border-bottom: 0; }
+.essay-fig {
+  margin: 2rem 0 2.4rem;
+}
+.essay-fig figcaption {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: #5c5346;
+  padding: 10px 2px 0;
+  line-height: 1.45;
+}
+.essay .sketch-board { margin: 0; }
+.essay .sketch-board[data-diagram="netforge-loop"] .sketch-svg { aspect-ratio: 960 / 460; }
+.essay .sketch-board[data-diagram="netforge-observe"] .sketch-svg { aspect-ratio: 960 / 400; }
+.essay .sketch-board[data-diagram="netforge-time"] .sketch-svg { aspect-ratio: 960 / 300; }
+@media (max-width: 767px) {
+  .essay { font-size: 18px; }
+  .essay-body > p:first-of-type::first-letter { font-size: 3.4rem; }
 }
