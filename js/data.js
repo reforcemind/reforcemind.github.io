@@ -321,8 +321,7 @@ export const researchData = [
     ],
     links: {
       pdf: "https://arxiv.org/abs/2604.09523",
-      github: "https://github.com/reforcemind/NetForge_RL",
-      product: "netforge.html"
+      github: "https://github.com/reforcemind/NetForge_RL"
     },
     contentFile: "js/posts/paper-netforge.md"
   }

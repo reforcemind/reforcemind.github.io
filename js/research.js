@@ -1,4 +1,4 @@
-import { researchData } from './data.js?v=14';
+import { researchData } from './data.js?v=15';
 import { mountDiagrams } from './sketch-diagram.js?v=9';
 
 let selectedId = null;
