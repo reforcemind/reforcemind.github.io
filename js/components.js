@@ -4,51 +4,45 @@ async function loadComponents() {
         if (navRes.ok) {
             document.getElementById('navbar-placeholder').innerHTML = await navRes.text();
             const currentUrl = window.location.href;
-            if (currentUrl.includes('research.html')) {
-                const el = document.getElementById('nav-research');
+            const highlight = (id) => {
+                const el = document.getElementById(id);
                 if (el) {
                     el.classList.add('text-crimson-authority', 'font-bold', 'border-b', 'border-crimson-authority');
                     el.classList.remove('text-on-surface-variant');
                 }
-            } else if (currentUrl.includes('join.html')) {
-                const el = document.getElementById('nav-join');
-                if (el) {
-                    el.classList.add('text-crimson-authority', 'font-bold', 'border-b', 'border-crimson-authority');
-                    el.classList.remove('text-on-surface-variant');
-                }
-            } else if (currentUrl.includes('flowedge.html')) {
-                const el = document.getElementById('nav-flowedge');
-                if (el) {
-                    el.classList.add('text-crimson-authority', 'font-bold', 'border-b', 'border-crimson-authority');
-                    el.classList.remove('text-on-surface-variant');
-                }
+            };
+            if (currentUrl.includes('research.html')) highlight('nav-research');
+            else if (currentUrl.includes('join.html')) highlight('nav-join');
+            else if (currentUrl.includes('products.html') || currentUrl.includes('flowedge.html') || currentUrl.includes('netforge.html')) highlight('nav-products');
+
+            const toggle = document.getElementById('nav-toggle');
+            const drawer = document.getElementById('nav-drawer');
+            const icon = document.getElementById('nav-toggle-icon');
+            if (toggle && drawer) {
+                toggle.addEventListener('click', () => {
+                    const open = drawer.classList.toggle('hidden') === false;
+                    toggle.setAttribute('aria-expanded', String(open));
+                    if (icon) icon.textContent = open ? 'close' : 'menu';
+                    toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+                });
             }
         }
-        
+
         const footRes = await fetch('components/footer.html');
         if (footRes.ok) {
-            document.getElementById('footer-placeholder').innerHTML = await footRes.text();
+            const foot = document.getElementById('footer-placeholder');
+            if (foot) foot.innerHTML = await footRes.text();
         }
-        
+
+        const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         const flowersHTML = `
-            <div class="fixed top-[20%] right-[5%] pointer-events-none z-0 mix-blend-multiply opacity-60 rotate-[-10deg]">
-                <img src="assets/flower.jpg" alt="" class="w-32 md:w-48 object-contain">
-            </div>
-            <div class="fixed top-[60%] left-[3%] pointer-events-none z-0 mix-blend-multiply opacity-50 rotate-12">
-                <img src="assets/flower2.jpg" alt="" class="w-24 md:w-40 object-contain">
-            </div>
-            <div class="fixed top-[10%] left-[25%] pointer-events-none z-0 mix-blend-multiply opacity-40 rotate-[35deg]">
-                <img src="assets/flower3.jpg" alt="" class="w-20 md:w-32 object-contain">
-            </div>
-            <div class="fixed bottom-[15%] right-[25%] pointer-events-none z-0 mix-blend-multiply opacity-45 rotate-[-45deg]">
-                <img src="assets/flower4.jpg" alt="" class="w-28 md:w-44 object-contain">
-            </div>
-            <div class="fixed top-[45%] right-[20%] pointer-events-none z-0 mix-blend-multiply opacity-50 rotate-45">
-                <img src="assets/flower5.jpg" alt="" class="w-24 md:w-36 object-contain">
-            </div>
-            <div class="fixed bottom-[5%] left-[40%] pointer-events-none z-0 mix-blend-multiply opacity-30 rotate-[-15deg]">
-                <img src="assets/flower6.jpg" alt="" class="w-20 md:w-32 object-contain">
-            </div>
+            <div class="dither-vignette"></div>
+            <div class="flora flora-a" style="${reduce ? 'animation:none' : ''}"><img src="assets/flower.jpg" alt=""></div>
+            <div class="flora flora-b" style="${reduce ? 'animation:none' : ''}"><img src="assets/flower2.jpg" alt=""></div>
+            <div class="flora flora-c" style="${reduce ? 'animation:none' : ''}"><img src="assets/flower3.jpg" alt=""></div>
+            <div class="flora flora-d" style="${reduce ? 'animation:none' : ''}"><img src="assets/flower4.jpg" alt=""></div>
+            <div class="flora flora-e" style="${reduce ? 'animation:none' : ''}"><img src="assets/flower5.jpg" alt=""></div>
+            <div class="flora flora-f" style="${reduce ? 'animation:none' : ''}"><img src="assets/flower6.jpg" alt=""></div>
         `;
         document.body.insertAdjacentHTML('afterbegin', flowersHTML);
     } catch (e) {
@@ -56,5 +50,3 @@ async function loadComponents() {
     }
 }
 document.addEventListener('DOMContentLoaded', loadComponents);
-
-

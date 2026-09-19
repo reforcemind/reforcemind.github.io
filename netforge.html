@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>NetForge - ReForceMind</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="css/style.css?v=13">
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries,typography"></script>
+    <script src="tailwind.config.js"></script>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&amp;family=Libre+Franklin:wght@400;500;600;700&amp;family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600;6..72,700&amp;family=Patrick+Hand&amp;display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet" />
+    <script>
+      document.documentElement.classList.add("js");
+      if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+    </script>
+</head>
+
+<body class="bg-parchment-base text-ink-black font-body-md antialiased min-h-screen flex flex-col relative overflow-x-hidden">
+    <div class="fixed inset-0 pointer-events-none z-0 mix-blend-multiply opacity-20">
+        <div class="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-forest-intellect/30 via-transparent to-transparent"></div>
+        <div class="absolute bottom-0 right-0 w-full h-full bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-azure-logic/20 via-transparent to-transparent"></div>
+    </div>
+
+    <div id="navbar-placeholder"></div>
+
+    <main class="flex-grow z-10 pt-24 md:pt-28 px-4 md:px-grid-margin pb-section-gap max-w-6xl mx-auto w-full">
+        <p class="crumb mb-3"><a href="products.html">Products</a> <span class="mx-2">/</span> NetForge</p>
+
+        <nav class="section-switch" id="section-switch" aria-label="On this page">
+            <button type="button" data-sec-prev aria-label="Previous section">←</button>
+            <button type="button" data-target="overview">What it is</button>
+            <button type="button" data-target="system">System</button>
+            <button type="button" data-target="use">How to use</button>
+            <button type="button" data-target="scenarios">Scenarios</button>
+            <button type="button" data-sec-next aria-label="Next section">→</button>
+        </nav>
+
+        <div class="section-stage">
+        <section data-panel="overview" class="mb-8 max-w-3xl is-on">
+            <p class="font-label-caps text-label-caps text-forest-intellect tracking-widest uppercase mb-4">Environment · arXiv:2604.09523</p>
+            <h1 class="font-headline-display text-5xl sm:text-6xl md:text-7xl text-ink-black mb-5 tracking-tight">NetForge</h1>
+            <p class="text-xl sm:text-2xl text-forest-intellect font-semibold mb-5">A gym where you train agents that attack a network — and agents that defend it.</p>
+            <p class="text-on-surface-variant text-lg leading-relaxed mb-8">
+                You write a trainer. NetForge is the world it plays in: a generated enterprise / OT network, a red operator, three zone-split blue agents, and a filtered SIEM feed instead of a ground-truth state vector. PettingZoo API. Same seed, same episode. MITRE tags, not exploit code.
+            </p>
+            <div class="flex flex-wrap gap-3">
+                <a href="#use" class="px-7 py-3 bg-crimson-authority text-white font-label-caps uppercase tracking-widest text-sm rounded-full hover:-translate-y-0.5 transition-transform">How to use it</a>
+                <a href="https://arxiv.org/abs/2604.09523" target="_blank" rel="noopener" class="px-7 py-3 border-[0.5px] border-ink-black font-label-caps uppercase tracking-widest text-sm rounded-full hover:bg-parchment-deep transition-colors">Paper</a>
+                <a href="https://github.com/reforcemind/NetForge_RL" target="_blank" rel="noopener" class="px-7 py-3 border-[0.5px] border-ink-black font-label-caps uppercase tracking-widest text-sm rounded-full hover:bg-parchment-deep transition-colors">GitHub</a>
+            </div>
+        </section>
+
+        <section data-panel="system" class="mb-8">
+            <div class="flex items-center gap-4 mb-4">
+                <h2 class="font-headline-lg text-3xl md:text-4xl">How the system fits together</h2>
+                <div class="h-px bg-ink-black/20 flex-1"></div>
+            </div>
+            <p class="text-on-surface-variant mb-5 max-w-3xl">Your trainer only sees observations, rewards, and action masks. Red has to recon. Blue reads SIEM, not the true graph.</p>
+            <div id="netforge-diagram" class="sketch-board"></div>
+        </section>
+
+        <section data-panel="use" class="mb-8">
+            <div class="flex items-center gap-4 mb-6">
+                <h2 class="font-headline-lg text-3xl md:text-4xl">How to use it</h2>
+                <div class="h-px bg-ink-black/20 flex-1"></div>
+            </div>
+            <div class="step-switch" id="use-switch">
+                <div class="step-toolbar">
+                    <button type="button" data-step-prev>Prev</button>
+                    <button type="button" data-step-next>Next</button>
+                    <span class="step-label">1 / 4</span>
+                    <div class="step-dots"></div>
+                    <button type="button" data-step-all>Show all</button>
+                </div>
+                <div class="use-list">
+                    <article class="use-item">
+                        <span class="use-num">1</span>
+                        <div>
+                            <h3 class="font-headline-md text-2xl mb-1">Install</h3>
+                            <p class="text-on-surface-variant">Python package from GitHub. The <code class="font-mono text-xs">[jax]</code> extra pulls the vectorized backend.</p>
+                            <pre><code id="netforge-install">pip install 'netforge_rl[jax] @ git+https://github.com/reforcemind/NetForge_RL'</code></pre>
+                        </div>
+                    </article>
+                    <article class="use-item">
+                        <span class="use-num">2</span>
+                        <div>
+                            <h3 class="font-headline-md text-2xl mb-1">Make an environment</h3>
+                            <p class="text-on-surface-variant">Pick a difficulty and a scenario. <code class="font-mono text-xs">easy</code> / <code class="font-mono text-xs">medium</code> / <code class="font-mono text-xs">hard</code>, plus a frozen held-out split for eval.</p>
+                            <pre><code>from netforge_rl.environment import make_env
+
+env = make_env("medium", scenario_type="ransomware", seed=0)
+obs, infos = env.reset(seed=0)</code></pre>
+                        </div>
+                    </article>
+                    <article class="use-item">
+                        <span class="use-num">3</span>
+                        <div>
+                            <h3 class="font-headline-md text-2xl mb-1">Step it like any PettingZoo env</h3>
+                            <p class="text-on-surface-variant">Four agents: <code class="font-mono text-xs">red_operator</code>, <code class="font-mono text-xs">blue_dmz</code>, <code class="font-mono text-xs">blue_internal</code>, <code class="font-mono text-xs">blue_restricted</code>. Actions take time — an isolate cancels an in-flight exploit on that host.</p>
+                            <pre><code>while env.agents:
+    actions = {a: env.action_space(a).sample() for a in env.agents}
+    obs, rewards, term, trunc, infos = env.step(actions)
+    if all(term.values()) or all(trunc.values()):
+        break</code></pre>
+                        </div>
+                    </article>
+                    <article class="use-item">
+                        <span class="use-num">4</span>
+                        <div>
+                            <h3 class="font-headline-md text-2xl mb-1">Train, then probe</h3>
+                            <p class="text-on-surface-variant">Use the JIT IPPO baseline, or plug in JaxMARL / RLlib / CleanRL / SB3 via the gym facade. Score policies with the six diagnostic probes (memory, attention, temporal, precision, safety, generalization) — not only mean reward.</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section data-panel="scenarios" class="mb-8">
+            <div class="flex items-center gap-4 mb-4">
+                <h2 class="font-headline-lg text-3xl md:text-4xl">Scenarios you can pick</h2>
+                <div class="h-px bg-ink-black/20 flex-1"></div>
+            </div>
+            <div class="scenario-stage mb-8" id="scenario-stage">
+                <div class="step-toolbar">
+                    <button type="button" data-sc-prev>Prev</button>
+                    <button type="button" data-sc-next>Next</button>
+                </div>
+                <article class="scenario-card" data-scenario>
+                    <p class="font-label-caps text-label-caps uppercase tracking-widest text-crimson-authority mb-2">ransomware</p>
+                    <p class="text-lg">Red tries to lock Corporate + Secure. Blue contains and restores.</p>
+                </article>
+                <article class="scenario-card" data-scenario>
+                    <p class="font-label-caps text-label-caps uppercase tracking-widest text-crimson-authority mb-2">apt_espionage</p>
+                    <p class="text-lg">Red persists and exfiltrates. Blue isolates every foothold.</p>
+                </article>
+                <article class="scenario-card" data-scenario>
+                    <p class="font-label-caps text-label-caps uppercase tracking-widest text-crimson-authority mb-2">cloud_hybrid</p>
+                    <p class="text-lg">Red breaches the Secure enclave. Blue keeps the Secure SLA.</p>
+                </article>
+                <article class="scenario-card" data-scenario>
+                    <p class="font-label-caps text-label-caps uppercase tracking-widest text-crimson-authority mb-2">iot_grid</p>
+                    <p class="text-lg">Red takes the controllers. Blue keeps controllers healthy.</p>
+                </article>
+                <article class="scenario-card" data-scenario>
+                    <p class="font-label-caps text-label-caps uppercase tracking-widest text-crimson-authority mb-2">ot_stuxnet</p>
+                    <p class="text-lg">Red drives a PLC kinetic. Blue stops physical damage.</p>
+                </article>
+            </div>
+            <div class="overflow-x-auto border-[0.5px] border-ink-black glass-panel">
+                <table class="w-full bench-table font-technical-sm text-technical-sm">
+                    <thead>
+                        <tr>
+                            <th>Scenario</th>
+                            <th>Red tries to</th>
+                            <th>Blue tries to</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>ransomware</td><td>lock Corporate + Secure</td><td>contain and restore</td></tr>
+                        <tr><td>apt_espionage</td><td>persist and exfiltrate</td><td>isolate every foothold</td></tr>
+                        <tr><td>cloud_hybrid</td><td>breach the Secure enclave</td><td>keep the Secure SLA</td></tr>
+                        <tr><td>iot_grid</td><td>take the controllers</td><td>keep controllers healthy</td></tr>
+                        <tr><td>ot_stuxnet</td><td>drive a PLC kinetic</td><td>stop physical damage</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        </div>
+
+        <p class="crumb">
+            <a href="products.html">All products</a>
+            <span class="mx-2">·</span>
+            <a href="flowedge.html">FlowEdge</a>
+        </p>
+    </main>
+
+    <div id="footer-placeholder"></div>
+    <script src="js/components.js?v=8"></script>
+    <script type="module" src="js/netforge.js?v=14"></script>
+</body>
+
+</html>

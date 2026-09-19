@@ -6,297 +6,193 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>FlowEdge - ReForceMind</title>
     <link rel="icon" type="image/png" href="favicon.png">
-    
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css?v=14">
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries,typography"></script>
     <script src="tailwind.config.js"></script>
-    
     <link href="https://fonts.googleapis.com" rel="preconnect" />
     <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&amp;family=Libre+Franklin:wght@400;500;600;700&amp;family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600;6..72,700&amp;display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&amp;family=Libre+Franklin:wght@400;500;600;700&amp;family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600;6..72,700&amp;family=Patrick+Hand&amp;display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet" />
-    <style>
-        /* Smooth scrolling for anchor links */
-        html { scroll-behavior: smooth; }
-        /* Style adjustments for prose in this theme */
-        .prose h2, .prose h3 { font-family: 'Newsreader', serif; }
-        .prose code { font-family: 'JetBrains Mono', monospace; font-size: 0.85em; }
-        .prose pre { background-color: #1a1a1a; color: #f3f4f6; }
-    </style>
+    <script>
+      document.documentElement.classList.add("js");
+      if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+    </script>
 </head>
 
 <body class="bg-parchment-base text-ink-black font-body-md antialiased min-h-screen flex flex-col relative overflow-x-hidden">
-    <!-- Background gradients matching main page -->
     <div class="fixed inset-0 pointer-events-none z-0 mix-blend-multiply opacity-20">
-        <div class="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-forest-intellect/30 via-transparent to-transparent"></div>
+        <div class="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-azure-logic/25 via-transparent to-transparent"></div>
         <div class="absolute bottom-0 right-0 w-full h-full bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-crimson-authority/20 via-transparent to-transparent"></div>
     </div>
 
-    <!-- Navbar -->
-    <div id="navbar-placeholder" class="relative z-50"></div>
+    <div id="navbar-placeholder"></div>
 
+    <main class="flex-grow z-10 pt-24 md:pt-28 px-4 md:px-grid-margin pb-section-gap max-w-6xl mx-auto w-full">
+        <p class="crumb mb-3"><a href="products.html">Products</a> <span class="mx-2">/</span> FlowEdge</p>
 
+        <nav class="section-switch" id="section-switch" aria-label="On this page">
+            <button type="button" data-sec-prev aria-label="Previous section">←</button>
+            <button type="button" data-target="overview">What it is</button>
+            <button type="button" data-target="system">System</button>
+            <button type="button" data-target="use">How to use</button>
+            <button type="button" data-target="perf">Performance</button>
+            <button type="button" data-sec-next aria-label="Next section">→</button>
+        </nav>
 
-    <main class="flex-grow z-10 pt-20 md:pt-24 flex flex-col md:flex-row relative max-w-7xl mx-auto w-full">
-        
-        <!-- Sidebar Navigation (Nekko style) -->
-        <aside class="w-full md:w-64 flex-shrink-0 md:sticky md:top-24 md:h-[calc(100vh-6rem)] overflow-y-auto border-b md:border-b-0 md:border-r border-ink-black/20 p-6 md:p-8 z-20 bg-transparent">
-            <h3 class="font-technical-sm text-technical-sm text-forest-intellect uppercase mb-6 tracking-widest">About</h3>
-            <nav class="flex flex-col gap-4">
-                <a href="#overview" class="font-mono text-sm text-ink-black font-semibold hover:text-crimson-authority transition-colors">What is FlowEdge</a>
-                <a href="#performance" class="font-mono text-sm text-on-surface-variant hover:text-ink-black transition-colors">Performance</a>
-                <a href="#accelerators" class="font-mono text-sm text-on-surface-variant hover:text-ink-black transition-colors">Accelerators</a>
-                <a href="#architectures" class="font-mono text-sm text-on-surface-variant hover:text-ink-black transition-colors">Architectures & Heads</a>
-                <a href="#quickstart" class="font-mono text-sm text-on-surface-variant hover:text-ink-black transition-colors">Quick Start</a>
-                
-                <div class="h-px bg-ink-black/10 my-2"></div>
-                
-                <a href="https://elprofesoriqo.github.io/FlowEdge/" target="_blank" class="font-mono text-sm text-ink-black font-semibold hover:text-crimson-authority transition-colors flex items-center gap-2">
-                    Docs <span class="material-symbols-outlined text-[16px]">menu_book</span>
-                </a>
-                <a href="https://github.com/elprofesoriqo/FlowEdge" target="_blank" class="font-mono text-sm text-on-surface-variant hover:text-azure-logic transition-colors flex items-center gap-2">
-                    GitHub Repo <span class="material-symbols-outlined text-[16px]">open_in_new</span>
-                </a>
-            </nav>
-        </aside>
-
-        <!-- Main Content Area -->
-        <article class="flex-1 p-6 md:p-12 lg:p-16 max-w-5xl">
-            <!-- Hero Section -->
-            <div id="overview" class="mb-20 scroll-mt-28 flex flex-col md:flex-row items-center gap-12">
-                <div class="flex-1">
-                    <h1 class="font-headline-display text-5xl md:text-7xl text-ink-black mb-6 tracking-tight">FlowEdge</h1>
-                    <p class="font-body-lg text-2xl md:text-3xl text-crimson-authority mb-6 font-semibold tracking-tight">Low-latency inference for real-time robotics policies</p>
-                    
-                    <p class="font-body-md text-ink-black/80 mb-10 text-lg leading-relaxed max-w-xl">
-                        A C++23 inference runtime for low-latency robotics policies. The current mainline supports Mamba + flow-matching inference and a fixed-shape LeRobot Diffusion Policy deployment path.
-                    </p>
-                    
-                    <div class="flex gap-4 items-center">
-                        <a href="#quickstart" class="px-8 py-3 bg-crimson-authority text-white font-label-caps uppercase tracking-widest text-sm rounded-full shadow-lg shadow-crimson-authority/30 hover:-translate-y-1 hover:shadow-xl transition-all duration-300 cursor-pointer">
-                            Get Started
-                        </a>
-                        <a href="https://elprofesoriqo.github.io/FlowEdge/" target="_blank" class="px-8 py-3 bg-white/50 border border-ink-black/20 text-ink-black font-label-caps uppercase tracking-widest text-sm rounded-full hover:bg-white hover:-translate-y-1 transition-all duration-300 cursor-pointer flex items-center gap-2">
-                            Read Docs <span class="material-symbols-outlined text-[16px]">menu_book</span>
-                        </a>
-                    </div>
-                </div>
-                <div class="w-full md:w-2/5 flex justify-center shrink-0">
-                    <div class="relative group">
-                        <div class="absolute inset-0 bg-crimson-authority/20 blur-[60px] rounded-full group-hover:bg-crimson-authority/30 transition-colors duration-500"></div>
-                        <img src="https://raw.githubusercontent.com/elprofesoriqo/FlowEdge/main/assets/surfingtux.png" alt="FlowEdge Tux" class="relative w-56 md:w-80 drop-shadow-2xl group-hover:-translate-y-4 group-hover:scale-105 transition-all duration-700 ease-out">
-                    </div>
-                </div>
+        <div class="section-stage">
+        <section data-panel="overview" class="mb-8 max-w-3xl is-on">
+            <p class="font-label-caps text-label-caps text-azure-logic tracking-widest uppercase mb-4">Runtime · v0.1.1</p>
+            <h1 class="font-headline-display text-5xl sm:text-6xl md:text-7xl text-ink-black mb-5 tracking-tight">FlowEdge</h1>
+            <p class="text-xl sm:text-2xl text-crimson-authority font-semibold mb-5">You train the policy in PyTorch. FlowEdge runs it on the robot’s clock.</p>
+            <p class="text-on-surface-variant text-lg leading-relaxed mb-8">
+                A C++ runtime for flow-matching and LeRobot Diffusion Policy. Convert the checkpoint once, load it into a fixed arena, and every control tick you get an action — or a defined miss: hold, drop, or raise. Not a trainer. Not a safety controller. Cameras and e-stop stay in LeRobot.
+            </p>
+            <div class="flex flex-wrap gap-3">
+                <a href="#use" class="px-7 py-3 bg-crimson-authority text-white font-label-caps uppercase tracking-widest text-sm rounded-full hover:-translate-y-0.5 transition-transform">How to use it</a>
+                <a href="https://elprofesoriqo.github.io/FlowEdge/" target="_blank" rel="noopener" class="px-7 py-3 border-[0.5px] border-ink-black font-label-caps uppercase tracking-widest text-sm rounded-full hover:bg-parchment-deep transition-colors">Docs</a>
+                <a href="https://github.com/elprofesoriqo/FlowEdge" target="_blank" rel="noopener" class="px-7 py-3 border-[0.5px] border-ink-black font-label-caps uppercase tracking-widest text-sm rounded-full hover:bg-parchment-deep transition-colors">GitHub</a>
             </div>
+        </section>
 
-            <!-- Core Features -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-20">
-                <div class="glass-panel border-[0.5px] border-ink-black p-8 rounded-xl hover:bg-parchment-deep transition-colors group">
-                    <span class="material-symbols-outlined text-azure-logic text-3xl mb-4 group-hover:scale-110 transition-transform">memory</span>
-                    <h3 class="font-headline-md text-xl mb-3 font-semibold text-ink-black">Static Runtime Memory</h3>
-                    <p class="text-ink-black/70 text-sm leading-relaxed">Zero heap allocations after engine initialization. Predictable, fast, and rock-solid for mission-critical robotics.</p>
-                </div>
-                <div class="glass-panel border-[0.5px] border-ink-black p-8 rounded-xl hover:bg-parchment-deep transition-colors group">
-                    <span class="material-symbols-outlined text-forest-intellect text-3xl mb-4 group-hover:scale-110 transition-transform">model_training</span>
-                    <h3 class="font-headline-md text-xl mb-3 font-semibold text-ink-black">Native Safetensors</h3>
-                    <p class="text-ink-black/70 text-sm leading-relaxed">Seamless loading and checkpoint conversion directly within the C++ runtime. No Python overhead required.</p>
-                </div>
-                <div class="glass-panel border-[0.5px] border-ink-black p-8 rounded-xl hover:bg-parchment-deep transition-colors group">
-                    <span class="material-symbols-outlined text-crimson-authority text-3xl mb-4 group-hover:scale-110 transition-transform">timer</span>
-                    <h3 class="font-headline-md text-xl mb-3 font-semibold text-ink-black">Deadline-Aware Inference</h3>
-                    <p class="text-ink-black/70 text-sm leading-relaxed">Optional Relay layer ensures your policies execute exactly when needed, maintaining strict real-time control loops.</p>
-                </div>
-                <div class="glass-panel border-[0.5px] border-ink-black p-8 rounded-xl hover:bg-parchment-deep transition-colors group">
-                    <span class="material-symbols-outlined text-ink-black text-3xl mb-4 group-hover:scale-110 transition-transform">history</span>
-                    <h3 class="font-headline-md text-xl mb-3 font-semibold text-ink-black">Deterministic State</h3>
-                    <p class="text-ink-black/70 text-sm leading-relaxed">Absolute reproducibility with deterministic state snapshot and restore capabilities built right in.</p>
-                </div>
+        <section data-panel="system" class="mb-8">
+            <div class="flex items-center gap-4 mb-4">
+                <h2 class="font-headline-lg text-3xl md:text-4xl">How the system fits together</h2>
+                <div class="h-px bg-ink-black/20 flex-1"></div>
             </div>
+            <p class="text-on-surface-variant mb-5 max-w-3xl">Sensors and the RGB encoder stay outside. Core only samples the policy head, then either ships an action chunk or applies the miss policy.</p>
+            <div id="flowedge-diagram" class="sketch-board"></div>
+        </section>
 
-            <!-- Performance Section -->
-            <div id="performance" class="mb-24 scroll-mt-28">
-                <div class="flex items-center gap-4 mb-8">
-                    <h2 class="font-headline-lg text-3xl md:text-4xl text-ink-black">Performance Highlights</h2>
-                    <div class="h-px bg-ink-black/20 flex-1"></div>
-                </div>
-                
-                <div class="relative rounded-2xl overflow-hidden border border-ink-black/20 shadow-2xl bg-ink-black mb-8 group flex justify-center items-center py-4">
-                    <div class="absolute inset-0 bg-gradient-to-t from-ink-black/50 to-transparent pointer-events-none z-10"></div>
-                    <img src="https://raw.githubusercontent.com/elprofesoriqo/FlowEdge/main/assets/perf.gif" alt="Performance Comparison" class="w-full max-w-[800px] object-cover group-hover:scale-[1.02] transition-transform duration-700 rounded-lg shadow-2xl">
-                </div>
-                
-                <div class="glass-card p-6 border-l-4 border-crimson-authority rounded-r-xl">
-                    <p class="text-ink-black/80 text-lg leading-relaxed m-0">
-                        We don't publish generated-checkpoint or fixed-token speedups as policy-latency evidence. Our focus is squarely on <strong>captured visual-policy replay</strong>, <strong>direct PyTorch comparisons</strong>, and actual <strong>end-to-end latency</strong> in real-world scenarios.
-                    </p>
-                </div>
+        <section data-panel="use" class="mb-8">
+            <div class="flex items-center gap-4 mb-6">
+                <h2 class="font-headline-lg text-3xl md:text-4xl">How to use it</h2>
+                <div class="h-px bg-ink-black/20 flex-1"></div>
             </div>
-
-            <!-- Hardware & Architecture -->
-            <div id="accelerators" class="mb-24 scroll-mt-28">
-                <div class="flex items-center gap-4 mb-8">
-                    <h2 class="font-headline-lg text-3xl md:text-4xl text-ink-black">Accelerators & Architecture</h2>
-                    <div class="h-px bg-ink-black/20 flex-1"></div>
+            <div class="step-switch" id="use-switch">
+                <div class="step-toolbar">
+                    <button type="button" data-step-prev>Prev</button>
+                    <button type="button" data-step-next>Next</button>
+                    <span class="step-label">1 / 4</span>
+                    <div class="step-dots"></div>
+                    <button type="button" data-step-all>Show all</button>
                 </div>
-
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    <!-- Accelerators Box -->
-                    <div class="bg-parchment-deep/50 border border-ink-black/10 rounded-2xl p-8 backdrop-blur-sm">
-                        <h3 class="font-headline-md text-2xl mb-6 text-ink-black flex items-center gap-2">
-                            <span class="material-symbols-outlined text-azure-logic">memory_alt</span> Accelerators
-                        </h3>
-                        <ul class="space-y-4">
-                            <li class="flex items-center gap-3 p-3 bg-white/40 rounded-lg border border-ink-black/5 shadow-sm">
-                                <span class="material-symbols-outlined text-forest-intellect bg-forest-intellect/10 p-1 rounded-full">check</span>
-                                <span class="font-semibold text-ink-black text-lg">CPU (AVX2 / NEON)</span>
-                            </li>
-                            <li class="flex items-center gap-3 p-3 opacity-60">
-                                <span class="material-symbols-outlined text-ink-black/50 bg-ink-black/5 p-1 rounded-full">hourglass_empty</span>
-                                <span class="text-ink-black font-medium">Tenstorrent (Planned)</span>
-                            </li>
-                            <li class="flex items-center gap-3 p-3 opacity-60">
-                                <span class="material-symbols-outlined text-ink-black/50 bg-ink-black/5 p-1 rounded-full">hourglass_empty</span>
-                                <span class="text-ink-black font-medium">CUDA (Planned)</span>
-                            </li>
-                            <li class="flex items-center gap-3 p-3 opacity-60">
-                                <span class="material-symbols-outlined text-ink-black/50 bg-ink-black/5 p-1 rounded-full">hourglass_empty</span>
-                                <span class="text-ink-black font-medium">Metal & Vulkan (Planned)</span>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <!-- Architectures Box -->
-                    <div id="architectures" class="bg-parchment-deep/50 border border-ink-black/10 rounded-2xl p-8 backdrop-blur-sm">
-                        <h3 class="font-headline-md text-2xl mb-6 text-ink-black flex items-center gap-2">
-                            <span class="material-symbols-outlined text-crimson-authority">account_tree</span> Supported Heads
-                        </h3>
-                        
-                        <div class="mb-6">
-                            <h4 class="text-xs font-label-caps uppercase tracking-widest text-ink-black/50 mb-3">Backbones</h4>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="bg-forest-intellect/10 border border-forest-intellect/20 text-forest-intellect px-3 py-1.5 rounded text-sm font-medium flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">check</span> Mamba selective-SSM</span>
-                                <span class="bg-azure-logic/10 border border-azure-logic/20 text-azure-logic px-3 py-1.5 rounded text-sm font-medium flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">science</span> Transformer Decoder</span>
-                            </div>
-                        </div>
-
+                <div class="use-list">
+                    <article class="use-item">
+                        <span class="use-num">1</span>
                         <div>
-                            <h4 class="text-xs font-label-caps uppercase tracking-widest text-ink-black/50 mb-3">Action Policies</h4>
-                            <ul class="space-y-3">
-                                <li class="flex items-center gap-3">
-                                    <span class="material-symbols-outlined text-forest-intellect text-lg">check_circle</span>
-                                    <span class="text-ink-black font-medium">Flow-Matching CNF</span>
-                                </li>
-                                <li class="flex items-center gap-3">
-                                    <span class="material-symbols-outlined text-forest-intellect text-lg">check_circle</span>
-                                    <span class="text-ink-black font-medium">Diffusion Policy (LeRobot)</span>
-                                </li>
-                            </ul>
+                            <h3 class="font-headline-md text-2xl mb-1">Install</h3>
+                            <p class="text-on-surface-variant">Grab a v0.1.1 CPU wheel from the GitHub release (not on PyPI yet), or build the C++ tree. CUDA is a source build with nvcc — those wheels are CPU-only.</p>
+                            <pre><code>python -m pip install flowedge-0.1.1-*.whl</code></pre>
                         </div>
-                    </div>
-                </div>
-                
-                <div class="mt-6 flex flex-wrap gap-4">
-                    <div class="flex-1 bg-white/30 border border-ink-black/10 rounded-xl p-4 flex items-center justify-between">
-                        <span class="text-xs font-label-caps uppercase text-ink-black/50 tracking-wider">Solvers</span>
-                        <div class="flex gap-4 font-mono text-sm text-ink-black/80 font-medium">
-                            <span>Euler</span>&bull;<span>Heun</span>&bull;<span>RK4</span>
+                    </article>
+                    <article class="use-item">
+                        <span class="use-num">2</span>
+                        <div>
+                            <h3 class="font-headline-md text-2xl mb-1">Convert the checkpoint once</h3>
+                            <p class="text-on-surface-variant">Map a pinned Hugging Face / LeRobot checkpoint into layouts the engine already knows (<code class="font-mono text-xs">backbone.*</code>, <code class="font-mono text-xs">flow.*</code>, <code class="font-mono text-xs">dp.*</code>). After that, Core never talks to the training graph.</p>
+                            <p class="mt-2 font-technical-sm text-technical-sm"><a class="underline decoration-[0.5px]" href="https://elprofesoriqo.github.io/FlowEdge/" target="_blank" rel="noopener">Converter in the docs</a></p>
                         </div>
-                    </div>
-                    <div class="flex-1 bg-white/30 border border-ink-black/10 rounded-xl p-4 flex items-center justify-between">
-                        <span class="text-xs font-label-caps uppercase text-ink-black/50 tracking-wider">Precision</span>
-                        <div class="flex gap-4 font-mono text-sm text-ink-black/80 font-medium">
-                            <span>FP32</span>&bull;<span>BF16</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Quick Start Section -->
-            <div id="quickstart" class="mb-12 scroll-mt-28">
-                <div class="flex items-center gap-4 mb-8">
-                    <h2 class="font-headline-lg text-3xl md:text-4xl text-ink-black">Ready to deploy?</h2>
-                    <div class="h-px bg-ink-black/20 flex-1"></div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <!-- C++ Card -->
-                    <div class="bg-ink-black text-parchment-base rounded-2xl overflow-hidden shadow-xl hover:-translate-y-1 transition-transform duration-300">
-                        <div class="bg-white/10 px-6 py-4 flex items-center justify-between border-b border-white/10">
-                            <h3 class="font-mono text-lg font-semibold flex items-center gap-2">
-                                <span class="material-symbols-outlined text-azure-logic">terminal</span> C++ Integration
-                            </h3>
-                        </div>
-                        <div class="p-6">
-                            <p class="text-white/60 text-sm mb-4">Requires CMake 3.21+ and a C++23 compiler.</p>
-                            
-                            <h4 class="text-xs uppercase tracking-widest text-white/40 mb-2">Build & Run</h4>
-                            <pre class="font-mono text-xs text-white/90 bg-black/40 p-4 rounded-lg overflow-x-auto mb-4 border border-white/5"><code>cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
-cmake --build build -j
-
-wget -qO models/mamba_flow.safetensors \
-  https://huggingface.co/...
-
+                    </article>
+                    <article class="use-item">
+                        <span class="use-num">3</span>
+                        <div>
+                            <h3 class="font-headline-md text-2xl mb-1">Sample</h3>
+                            <p class="text-on-surface-variant">Run one trajectory against the converted file. Python and the CLI call the same engine.</p>
+                            <pre><code>python examples/core/flow_sample.py models/mamba_flow.safetensors euler 10
+# or
 ./build/flow_sample models/mamba_flow.safetensors euler 10</code></pre>
                         </div>
-                    </div>
-
-                    <!-- Python Card -->
-                    <div class="bg-ink-black text-parchment-base rounded-2xl overflow-hidden shadow-xl hover:-translate-y-1 transition-transform duration-300">
-                        <div class="bg-white/10 px-6 py-4 flex items-center justify-between border-b border-white/10">
-                            <h3 class="font-mono text-lg font-semibold flex items-center gap-2">
-                                <span class="material-symbols-outlined text-crimson-authority">code</span> Python Package
-                            </h3>
+                    </article>
+                    <article class="use-item">
+                        <span class="use-num">4</span>
+                        <div>
+                            <h3 class="font-headline-md text-2xl mb-1">Put it on the robot clock</h3>
+                            <p class="text-on-surface-variant">Each tick: observation in, action out. If this sample is late, say what the motors get. Limits and e-stop are still yours / LeRobot’s.</p>
+                            <pre><code>--period-ms 10 --on-miss hold   # or drop | raise</code></pre>
                         </div>
-                        <div class="p-6">
-                            <p class="text-white/60 text-sm mb-4">Uses the exact same high-performance C++ engine.</p>
-                            
-                            <h4 class="text-xs uppercase tracking-widest text-white/40 mb-2">Install & Sample</h4>
-                            <pre class="font-mono text-xs text-white/90 bg-black/40 p-4 rounded-lg overflow-x-auto mb-6 border border-white/5"><code>python -m pip install .
-python examples/core/flow_sample.py models/mamba_flow.safetensors</code></pre>
-                            
-                            <div class="bg-white/5 border border-white/10 rounded p-3">
-                                <p class="text-xs text-white/70 m-0">
-                                    Use <code class="text-azure-logic">Engine.sample(prefix, noise, steps, method)</code> with <code class="text-white">euler</code>, <code class="text-white">heun</code>, or <code class="text-white">rk4</code>.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+                    </article>
                 </div>
             </div>
-        </article>
+        </section>
+
+        <section data-panel="perf" class="mb-8">
+            <div class="flex items-center gap-4 mb-4">
+                <h2 class="font-headline-lg text-3xl md:text-4xl">Performance</h2>
+                <div class="h-px bg-ink-black/20 flex-1"></div>
+            </div>
+            <p class="text-on-surface-variant mb-8 max-w-3xl">Matched Diffusion Policy PushT replay vs LeRobot / PyTorch on the same observation file. Same load → warmup (malloc 0) → DDIM. First bar to 100% in each pair is faster. Not a 10&nbsp;ms loop — that is the robot’s tick, not this checkpoint’s p50.</p>
+            <div class="perf-races" id="perf-races">
+                <div class="perf-pair">
+                    <h3>CUDA · GTX 1650</h3>
+                    <div class="perf-row">
+                        <span>FlowEdge</span>
+                        <div class="perf-track"><div class="perf-fill" style="--t: 1.1s"></div></div>
+                        <span class="perf-ms">131 ms</span>
+                    </div>
+                    <div class="perf-row">
+                        <span>PyTorch</span>
+                        <div class="perf-track"><div class="perf-fill is-base" style="--t: 2.9s"></div></div>
+                        <span class="perf-ms">345 ms</span>
+                    </div>
+                    <p class="perf-note">0.38× the PyTorch CUDA p50. Encoder still in LeRobot. Not TensorRT, not Jetson.</p>
+                </div>
+                <div class="perf-pair">
+                    <h3>CPU · threads=1</h3>
+                    <div class="perf-row">
+                        <span>FlowEdge</span>
+                        <div class="perf-track"><div class="perf-fill" style="--t: 1.4s"></div></div>
+                        <span class="perf-ms">851 ms</span>
+                    </div>
+                    <div class="perf-row">
+                        <span>PyTorch</span>
+                        <div class="perf-track"><div class="perf-fill is-base" style="--t: 2.32s"></div></div>
+                        <span class="perf-ms">1409 ms</span>
+                    </div>
+                    <p class="perf-note">0.60× the LeRobot / PyTorch p50. The fair compare. At 4 threads: 633 vs 819&nbsp;ms.</p>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-4 mb-4 mt-12">
+                <h3 class="font-headline-lg text-2xl md:text-3xl">How it compares to other tools</h3>
+                <div class="h-px bg-ink-black/20 flex-1"></div>
+            </div>
+            <p class="text-on-surface-variant mb-6 max-w-3xl">From the README: PyTorch, LeRobot, TensorRT, and generic model servers are good at training or at running arbitrary graphs. They are a weak fit as the thing inside the robot loop.</p>
+            <div class="compare-grid">
+                <article class="compare-card">
+                    <h3>PyTorch / LeRobot</h3>
+                    <p class="compare-role">They train. FlowEdge runs the tick.</p>
+                    <p>Cameras, normalization, joint limits, and e-stop stay in LeRobot. The published numbers are a matched Diffusion Policy replay against that stack on the same file — not a generated-token speedup.</p>
+                </article>
+                <article class="compare-card">
+                    <h3>TensorRT / ONNX</h3>
+                    <p class="compare-role">Graph compilers. FlowEdge is not one.</p>
+                    <p>Each head is hand-assembled into a sized arena. There is no graph interpreter (ADR 0005). The 131 vs 345&nbsp;ms CUDA figure is vs PyTorch CUDA on a GTX 1650, not TensorRT or Jetson/ARM.</p>
+                </article>
+                <article class="compare-card">
+                    <h3>Model servers</h3>
+                    <p class="compare-role">Throughput and a growing KV cache.</p>
+                    <p>A 100&nbsp;Hz loop wants malloc 0 after load and a defined miss: hold, drop, or raise. A p50 is not a miss count. Optional Relay is local IPC around Core, not the default DP path.</p>
+                </article>
+                <article class="compare-card">
+                    <h3>Python-in-the-loop DDIM</h3>
+                    <p class="compare-role">More NFE than a short flow ODE.</p>
+                    <p>Diffusion Policy is first-class when that is the trained checkpoint. Flow matching is the default head — Euler / Heun / RK4, gated by ULP vs the same PyTorch reference (~1e-6 rel). No published flow p50 yet.</p>
+                </article>
+            </div>
+            <p class="mt-6 font-technical-sm text-technical-sm text-on-surface-variant">Evidence and how to regenerate: <a class="underline decoration-[0.5px]" href="https://elprofesoriqo.github.io/FlowEdge/performance.html" target="_blank" rel="noopener">performance docs</a>.</p>
+        </section>
+        </div>
+
+        <p class="crumb">
+            <a href="products.html">All products</a>
+            <span class="mx-2">·</span>
+            <a href="netforge.html">NetForge</a>
+        </p>
     </main>
 
-    <!-- Footer -->
-    <div id="footer-placeholder" class="mt-auto"></div>
-
-    <!-- Script to load components (navbar & footer) -->
-    <script src="js/components.js"></script>
-    
-    <!-- Script for active sidebar link highlight -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const sections = document.querySelectorAll('main article h2[id], main article div[id]');
-            const navLinks = document.querySelectorAll('aside nav a[href^="#"]');
-            
-            window.addEventListener('scroll', () => {
-                let current = '';
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop;
-                    if (scrollY >= sectionTop - 120) {
-                        current = section.getAttribute('id');
-                    }
-                });
-                
-                navLinks.forEach(link => {
-                    link.classList.remove('text-crimson-authority', 'font-semibold');
-                    link.classList.add('text-on-surface-variant');
-                    if (link.getAttribute('href').includes(current)) {
-                        link.classList.add('text-crimson-authority', 'font-semibold');
-                        link.classList.remove('text-on-surface-variant');
-                    }
-                });
-            });
-        });
-    </script>
+    <div id="footer-placeholder"></div>
+    <script src="js/components.js?v=8"></script>
+    <script type="module" src="js/flowedge.js?v=14"></script>
 </body>
+
 </html>

@@ -1,4 +1,4 @@
-import { researchData } from './data.js';
+import { researchData } from './data.js?v=10';
 
 let selectedId = null;
 
@@ -15,14 +15,32 @@ window.toggleSidebar = function() {
 }
 
 function loadData() {
-    if(typeof researchData !== 'undefined' && researchData.length > 0) {
-        const countEl = document.getElementById('entries-count');
-        if (countEl) countEl.innerText = `${researchData.length < 10 ? '0' : ''}${researchData.length} ENTRIES`;
-        renderList();
-        selectItem(researchData[0].id);
-    } else {
-        document.getElementById('research-list').innerHTML = '<p class="p-6 text-sm text-crimson-authority">Error: data.js not loaded.</p>';
+    const countEl = document.getElementById('entries-count');
+    const listEl = document.getElementById('research-list');
+    const detailEl = document.getElementById('research-detail');
+
+    if (countEl) countEl.innerText = `${researchData.length < 10 ? '0' : ''}${researchData.length} ENTRIES`;
+
+    if (!researchData.length) {
+        if (listEl) {
+            listEl.innerHTML = '<p class="px-6 py-8 text-sm text-on-surface-variant">No entries yet.</p>';
+        }
+        if (detailEl) {
+            detailEl.innerHTML = `
+                <div class="max-w-2xl mx-auto w-full py-16">
+                    <p class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant mb-4">Archive</p>
+                    <h1 class="font-headline-lg text-4xl mb-4">Nothing published here yet.</h1>
+                    <p class="text-on-surface-variant text-lg leading-relaxed">Notes and papers will land in this index when they are ready. FlowEdge and NetForge are on the product pages.</p>
+                </div>
+            `;
+        }
+        return;
     }
+
+    renderList();
+    const fromHash = decodeURIComponent(location.hash.replace('#', ''));
+    const initial = researchData.find(d => d.id === fromHash) || researchData[0];
+    selectItem(initial.id);
 }
 
 function renderList() {
@@ -42,6 +60,7 @@ function renderList() {
 window.selectItem = function(id) {
     selectedId = id;
     renderList();
+    history.replaceState(null, '', `#${id}`);
     
     const item = researchData.find(d => d.id === id);
     if(!item) return;
@@ -60,7 +79,7 @@ window.selectItem = function(id) {
                     <span class="inline-block px-3 py-1 bg-parchment-deep hairline-b border-ink-black text-label-caps font-label-caps uppercase rounded-full">${item.type}</span>
                     <span class="text-technical-sm font-technical-sm text-on-surface-variant">Published: ${item.publishedDate}</span>
                 </div>
-                <h1 class="text-headline-lg-mobile md:text-headline-display font-headline-display text-ink-black leading-tight tracking-tighter">${item.title}</h1>
+                <h1 class="text-headline-lg-mobile md:text-5xl lg:text-headline-display font-headline-display leading-tight tracking-tighter">${item.title}</h1>
                 <div class="flex flex-col gap-2 mt-4 hairline-t border-ink-black pt-4">
                     <h4 class="text-label-caps font-label-caps uppercase text-on-surface-variant">Authors</h4>
                     <p class="text-body-md font-body-md text-ink-black">${item.fullAuthors}</p>

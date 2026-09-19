@@ -1,24 +1,35 @@
-<nav
-    class="fixed top-0 w-full z-50 flex justify-between items-center px-4 md:px-grid-margin h-16 bg-parchment-base/90 backdrop-blur-md border-b-[0.5px] border-outline">
-    <a href="index.html"
-        class="flex items-center gap-2 md:gap-4 cursor-pointer group decoration-transparent hover:decoration-transparent shrink-0">
-        <span class="material-symbols-outlined text-crimson-authority text-lg md:text-2xl">grain</span>
-        <span
-            class="font-headline-md text-[1.2rem] md:text-headline-md tracking-tight text-ink-black group-hover:text-crimson-authority transition-colors">REFORCEMIND</span>
-    </a>
-    <div class="flex items-center gap-2 md:gap-8 font-label-caps text-label-caps ml-auto md:ml-0">
-        <a id="nav-flowedge"
-            class="transition-colors duration-300 px-1 md:px-2 py-1 text-[9px] md:text-[11px] text-on-surface-variant hover:text-crimson-authority"
-            href="flowedge.html">FLOWEDGE</a>
-        <a id="nav-research"
-            class="transition-colors duration-300 px-1 md:px-2 py-1 text-[9px] md:text-[11px] text-on-surface-variant hover:text-crimson-authority"
-            href="research.html">RESEARCH</a>
-        <a id="nav-join"
-            class="transition-colors duration-300 px-1 md:px-2 py-1 text-[9px] md:text-[11px] text-on-surface-variant hover:text-crimson-authority"
-            href="join.html">JOIN US</a>
+<nav class="site-nav fixed top-0 w-full z-50 bg-parchment-base/90 backdrop-blur-md border-b-[0.5px] border-outline">
+    <div class="flex justify-between items-center px-4 md:px-grid-margin h-16">
+        <a href="index.html"
+            class="flex items-center gap-2 md:gap-4 cursor-pointer group decoration-transparent hover:decoration-transparent shrink-0 min-w-0">
+            <span class="material-symbols-outlined text-crimson-authority text-lg md:text-2xl">grain</span>
+            <span
+                class="font-headline-md text-[1.05rem] sm:text-[1.2rem] md:text-headline-md tracking-tight text-ink-black group-hover:text-crimson-authority transition-colors truncate">REFORCEMIND</span>
+        </a>
+        <div class="hidden md:flex items-center gap-4 lg:gap-6 font-label-caps text-label-caps">
+            <a id="nav-products"
+                class="transition-colors duration-300 px-1 py-1 text-[11px] text-on-surface-variant hover:text-crimson-authority"
+                href="products.html">PRODUCTS</a>
+            <a id="nav-research"
+                class="transition-colors duration-300 px-1 py-1 text-[11px] text-on-surface-variant hover:text-crimson-authority"
+                href="research.html">RESEARCH</a>
+            <a id="nav-join"
+                class="transition-colors duration-300 px-1 py-1 text-[11px] text-on-surface-variant hover:text-crimson-authority whitespace-nowrap"
+                href="join.html">JOIN US</a>
+            <a href="research.html"
+                class="ml-2 font-label-caps text-label-caps text-crimson-authority hover:bg-surface-container-low transition-colors duration-300 px-4 py-2 border border-outline rounded-lg shrink-0">
+                ARCHIVE
+            </a>
+        </div>
+        <button type="button" id="nav-toggle" class="md:hidden p-2 -mr-2 text-ink-black" aria-expanded="false" aria-controls="nav-drawer" aria-label="Open menu">
+            <span class="material-symbols-outlined text-3xl" id="nav-toggle-icon">menu</span>
+        </button>
     </div>
-    <button
-        class="hidden sm:block ml-4 font-label-caps text-label-caps text-crimson-authority hover:bg-surface-container-low transition-colors duration-300 px-4 py-2 border border-outline rounded-lg shrink-0">
-        ARCHIVE
-    </button>
+    <div id="nav-drawer" class="hidden md:hidden px-4 pb-2">
+        <a href="products.html">Products</a>
+        <a href="research.html">Research</a>
+        <a href="join.html">Join us</a>
+        <a href="directory.html">Directory</a>
+        <a href="resources.html">Resources</a>
+    </div>
 </nav>
