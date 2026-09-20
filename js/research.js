@@ -1,5 +1,7 @@
-import { researchData } from './data.js?v=15';
-import { mountDiagrams } from './sketch-diagram.js?v=9';
+import { extractMath, injectMathPlaceholders, hydrateMath } from './essay-math.js?v=1';
+import { researchData } from './data.js?v=24';
+import { mountDiagrams } from './sketch-diagram.js?v=16';
+import { mountSketchExport } from './sketch-export.js?v=1';
 
 let selectedId = null;
 
@@ -70,7 +72,8 @@ window.selectItem = function(id) {
 
     const links = `
         ${item.links?.pdf ? `<a href="${item.links.pdf}" target="_blank" rel="noopener">arXiv</a>` : ""}
-        ${item.links?.github ? `<a href="${item.links.github}" target="_blank" rel="noopener">NetForge_RL</a>` : ""}
+        ${item.links?.github ? `<a href="${item.links.github}" target="_blank" rel="noopener">${item.links.label || "GitHub"}</a>` : ""}
+        ${item.links?.docs ? `<a href="${item.links.docs}" target="_blank" rel="noopener">docs</a>` : ""}
     `;
 
     if (essay) {
@@ -122,21 +125,24 @@ window.selectItem = function(id) {
         `;
     }
     if (item.contentFile) {
-        fetch(`${item.contentFile}?v=5`)
+        fetch(`${item.contentFile}?v=19`)
             .then(response => {
                 if (!response.ok) throw new Error('Network response was not ok');
                 return response.text();
             })
-            .then(text => {
+            .then(raw => {
                 const markdownContent = document.getElementById('markdown-content');
+                const { text, math } = extractMath(raw);
                 if (typeof marked !== "undefined") {
                     marked.setOptions({ gfm: true, breaks: false });
-                    markdownContent.innerHTML = marked.parse(text);
+                    markdownContent.innerHTML = injectMathPlaceholders(marked.parse(text), math);
                 } else {
-                    markdownContent.innerHTML = text;
+                    markdownContent.innerHTML = injectMathPlaceholders(text, math);
                 }
 
                 mountDiagrams(markdownContent);
+                mountSketchExport(markdownContent);
+                hydrateMath(markdownContent, math);
 
                 if (!essay && typeof mermaid !== 'undefined') {
                     const mermaidBlocks = document.querySelectorAll('code.language-mermaid');
@@ -164,22 +170,6 @@ window.selectItem = function(id) {
                         h.parentNode.replaceChild(wrapper, h);
                     });
                 }
-                const renderMath = () => {
-                    if (window.renderMathInElement) {
-                        renderMathInElement(markdownContent, {
-                          delimiters: [
-                              {left: '$$', right: '$$', display: true},
-                              {left: '$', right: '$', display: false},
-                              {left: '\\(', right: '\\)', display: false},
-                              {left: '\\[', right: '\\]', display: true}
-                          ],
-                          throwOnError: false
-                        });
-                    } else {
-                        setTimeout(renderMath, 100);
-                    }
-                };
-                renderMath();
             })
             .catch(error => {
                 console.error('Error fetching markdown:', error);

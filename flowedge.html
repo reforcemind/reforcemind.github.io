@@ -41,7 +41,7 @@
 
         <div class="section-stage">
         <section data-panel="overview" class="mb-8 max-w-3xl is-on">
-            <p class="font-label-caps text-label-caps text-azure-logic tracking-widest uppercase mb-4">Runtime · v0.1.1</p>
+            <p class="font-label-caps text-label-caps text-azure-logic tracking-widest uppercase mb-4">Runtime · v0.1.2</p>
             <h1 class="font-headline-display text-5xl sm:text-6xl md:text-7xl text-ink-black mb-5 tracking-tight">FlowEdge</h1>
             <p class="text-xl sm:text-2xl text-crimson-authority font-semibold mb-5">You train the policy in PyTorch. FlowEdge runs it on the robot’s clock.</p>
             <p class="text-on-surface-variant text-lg leading-relaxed mb-8">
@@ -49,8 +49,8 @@
             </p>
             <div class="flex flex-wrap gap-3">
                 <a href="#use" class="px-7 py-3 bg-crimson-authority text-white font-label-caps uppercase tracking-widest text-sm rounded-full hover:-translate-y-0.5 transition-transform">How to use it</a>
-                <a href="https://elprofesoriqo.github.io/FlowEdge/" target="_blank" rel="noopener" class="px-7 py-3 border-[0.5px] border-ink-black font-label-caps uppercase tracking-widest text-sm rounded-full hover:bg-parchment-deep transition-colors">Docs</a>
-                <a href="https://github.com/elprofesoriqo/FlowEdge" target="_blank" rel="noopener" class="px-7 py-3 border-[0.5px] border-ink-black font-label-caps uppercase tracking-widest text-sm rounded-full hover:bg-parchment-deep transition-colors">GitHub</a>
+                <a href="https://reforcemind.github.io/FlowEdge/" target="_blank" rel="noopener" class="px-7 py-3 border-[0.5px] border-ink-black font-label-caps uppercase tracking-widest text-sm rounded-full hover:bg-parchment-deep transition-colors">Docs</a>
+                <a href="https://github.com/reforcemind/FlowEdge" target="_blank" rel="noopener" class="px-7 py-3 border-[0.5px] border-ink-black font-label-caps uppercase tracking-widest text-sm rounded-full hover:bg-parchment-deep transition-colors">GitHub</a>
             </div>
         </section>
 
@@ -81,8 +81,8 @@
                         <span class="use-num">1</span>
                         <div>
                             <h3 class="font-headline-md text-2xl mb-1">Install</h3>
-                            <p class="text-on-surface-variant">Grab a v0.1.1 CPU wheel from the GitHub release (not on PyPI yet), or build the C++ tree. CUDA is a source build with nvcc — those wheels are CPU-only.</p>
-                            <pre><code>python -m pip install flowedge-0.1.1-*.whl</code></pre>
+                            <p class="text-on-surface-variant">Grab a v0.1.2 CPU wheel from the GitHub release (not on PyPI yet), or build the C++ tree. CUDA is a source build with nvcc — those wheels are CPU-only.</p>
+                            <pre><code>python -m pip install flowedge-0.1.2-*.whl</code></pre>
                         </div>
                     </article>
                     <article class="use-item">
@@ -90,7 +90,7 @@
                         <div>
                             <h3 class="font-headline-md text-2xl mb-1">Convert the checkpoint once</h3>
                             <p class="text-on-surface-variant">Map a pinned Hugging Face / LeRobot checkpoint into layouts the engine already knows (<code class="font-mono text-xs">backbone.*</code>, <code class="font-mono text-xs">flow.*</code>, <code class="font-mono text-xs">dp.*</code>). After that, Core never talks to the training graph.</p>
-                            <p class="mt-2 font-technical-sm text-technical-sm"><a class="underline decoration-[0.5px]" href="https://elprofesoriqo.github.io/FlowEdge/" target="_blank" rel="noopener">Converter in the docs</a></p>
+                            <p class="mt-2 font-technical-sm text-technical-sm"><a class="underline decoration-[0.5px]" href="https://reforcemind.github.io/FlowEdge/" target="_blank" rel="noopener">Converter in the docs</a></p>
                         </div>
                     </article>
                     <article class="use-item">
@@ -179,7 +179,7 @@
                     <p>Diffusion Policy is first-class when that is the trained checkpoint. Flow matching is the default head — Euler / Heun / RK4, gated by ULP vs the same PyTorch reference (~1e-6 rel). No published flow p50 yet.</p>
                 </article>
             </div>
-            <p class="mt-6 font-technical-sm text-technical-sm text-on-surface-variant">Evidence and how to regenerate: <a class="underline decoration-[0.5px]" href="https://elprofesoriqo.github.io/FlowEdge/performance.html" target="_blank" rel="noopener">performance docs</a>.</p>
+            <p class="mt-6 font-technical-sm text-technical-sm text-on-surface-variant">Evidence and how to regenerate: <a class="underline decoration-[0.5px]" href="https://reforcemind.github.io/FlowEdge/performance.html" target="_blank" rel="noopener">performance docs</a>.</p>
         </section>
         </div>
 

@@ -58,17 +58,17 @@ export const projects = [
     name: "FlowEdge",
     kind: "SYSTEM",
     status: "active",
-    release: "v0.1.1",
+    release: "v0.1.2",
     blurb:
       "C++23 inference runtime for robotics policies: fixed memory after load, explicit miss handling, CPU and CUDA, LeRobot adapter.",
     summary:
       "A deploy runtime for learned policies. Convert a checkpoint once, load it into a bump-allocated arena, sample flow matching or Diffusion Policy, and honor a control period with --on-miss hold|drop|raise.",
     href: "flowedge.html",
-    github: "https://github.com/elprofesoriqo/FlowEdge",
-    docs: "https://elprofesoriqo.github.io/FlowEdge/",
-    contributing: "https://github.com/elprofesoriqo/FlowEdge/blob/main/CONTRIBUTING.md",
-    issues: "https://github.com/elprofesoriqo/FlowEdge/issues",
-    releases: "https://github.com/elprofesoriqo/FlowEdge/releases/tag/v0.1.1",
+    github: "https://github.com/reforcemind/FlowEdge",
+    docs: "https://reforcemind.github.io/FlowEdge/",
+    contributing: "https://github.com/reforcemind/FlowEdge/blob/main/CONTRIBUTING.md",
+    issues: "https://github.com/reforcemind/FlowEdge/issues",
+    releases: "https://github.com/reforcemind/FlowEdge/releases/tag/v0.1.2",
     huggingface: "https://huggingface.co/ReForceMind/mamba_flow",
     selected: true,
     backends: [
@@ -134,9 +134,9 @@ export const artifacts = [
   {
     id: "code-flowedge",
     kind: "code",
-    title: "elprofesoriqo/FlowEdge",
-    detail: "C++23 runtime · v0.1.1 wheels",
-    href: "https://github.com/elprofesoriqo/FlowEdge",
+    title: "reforcemind/FlowEdge",
+    detail: "C++23 runtime · v0.1.2 wheels",
+    href: "https://github.com/reforcemind/FlowEdge",
     project: "flowedge"
   },
   {
@@ -224,7 +224,7 @@ export const artifacts = [
     kind: "benchmarks",
     title: "PushT Diffusion Policy, CPU threads=1",
     detail: "851 ms vs 1409 ms p50",
-    href: "https://elprofesoriqo.github.io/FlowEdge/performance.html",
+    href: "https://reforcemind.github.io/FlowEdge/performance.html",
     project: "flowedge"
   },
   {
@@ -232,7 +232,7 @@ export const artifacts = [
     kind: "benchmarks",
     title: "PushT Diffusion Policy, GTX 1650",
     detail: "131 ms vs 345 ms p50",
-    href: "https://elprofesoriqo.github.io/FlowEdge/performance.html",
+    href: "https://reforcemind.github.io/FlowEdge/performance.html",
     project: "flowedge"
   },
   {
@@ -278,7 +278,7 @@ export const rolesData = [
     id: "03",
     title: "Open Source Collaborator",
     team: "Applied",
-    description: `Product: <a href="https://github.com/elprofesoriqo/FlowEdge/blob/main/CONTRIBUTING.md" target="_blank" class="underline decoration-ink-black/40 hover:decoration-ink-black transition-colors font-medium">CONTRIBUTING.md</a>\n\nResponsibilities:\n- Trying the FlowEdge quickstart, filing a miss-log, or taking a labeled good-first-issue.\n- NetForge environment bugs, evaluation reproductions, and JAX/Python parity checks.\n- Star the repo if you like; a reproduction is better.`
+    description: `Product: <a href="https://github.com/reforcemind/FlowEdge/blob/main/CONTRIBUTING.md" target="_blank" class="underline decoration-ink-black/40 hover:decoration-ink-black transition-colors font-medium">CONTRIBUTING.md</a>\n\nResponsibilities:\n- Trying the FlowEdge quickstart, filing a miss-log, or taking a labeled good-first-issue.\n- NetForge environment bugs, evaluation reproductions, and JAX/Python parity checks.\n- Star the repo if you like; a reproduction is better.`
   }
 ];
 
@@ -305,6 +305,28 @@ export const collab = [
 
 export const researchData = [
   {
+    id: "PAPER-002",
+    type: "ESSAY",
+    format: "substack",
+    title: "Don't malloc after load",
+    dek: "A faster median against PyTorch is easy to celebrate. The sample path still has to be allocation-controlled, and a 10 ms period still has to be allowed to miss.",
+    date: "2026.09",
+    publishedDate: "19 September 2026",
+    readMinutes: 14,
+    authors: "I. Jankowski",
+    fullAuthors: "Igor Jankowski",
+    project: "flowedge",
+    abstract: [
+      "The median against PyTorch can look like a robot loop. It is not. This article is the C++ behind allocation-controlled, deadline-aware inference: one bump arena at load, kernels that do not allocate in the timed window, and a miss you can log when a 10 ms period does not fit this checkpoint."
+    ],
+    links: {
+      github: "https://github.com/reforcemind/FlowEdge",
+      label: "FlowEdge",
+      docs: "https://reforcemind.github.io/FlowEdge/"
+    },
+    contentFile: "js/posts/paper-flowedge.md"
+  },
+  {
     id: "PAPER-001",
     type: "ESSAY",
     format: "substack",
@@ -321,7 +343,8 @@ export const researchData = [
     ],
     links: {
       pdf: "https://arxiv.org/abs/2604.09523",
-      github: "https://github.com/reforcemind/NetForge_RL"
+      github: "https://github.com/reforcemind/NetForge_RL",
+      label: "NetForge_RL"
     },
     contentFile: "js/posts/paper-netforge.md"
   }
@@ -332,6 +355,11 @@ export const directory = [
     path: "research/",
     href: "research.html",
     comment: "archive"
+  },
+  {
+    path: "research/flowedge-runtime.md",
+    href: "research.html#PAPER-002",
+    comment: "p99 · C++23 runtime"
   },
   {
     path: "research/netforge-rl.md",

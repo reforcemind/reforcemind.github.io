@@ -159,6 +159,7 @@ body { overflow-x: hidden; }
   font-size: 22px;
   fill: #1a1208;
 }
+.sketch-label-sm { font-size: 16px; }
 .sketch-label-light { fill: #fcefd4; }
 .sketch-sub {
   font-family: "Patrick Hand", "Caveat", cursive;
@@ -719,7 +720,8 @@ body.sidebar-collapsed #research-detail > .max-w-2xl {
   font-size: 13px;
   line-height: 1.5;
   margin: 0 0 1.6em;
-  border: 0.5px solid #000;
+  border: 1.5px solid #1a1208;
+  box-shadow: 3px 3px 0 #1a1208;
 }
 .essay-body code {
   font-family: "JetBrains Mono", monospace;
@@ -736,8 +738,10 @@ body.sidebar-collapsed #research-detail > .max-w-2xl {
   font-size: 14px;
   line-height: 1.45;
   margin: 0.4rem 0 2rem;
-  border: 0.5px solid #000;
+  border: 1.5px solid #1a1208;
+  box-shadow: 3px 3px 0 #1a1208;
   font-family: "Libre Franklin", sans-serif;
+  background: #fffaf2;
 }
 .essay-body th, .essay-body td {
   padding: 10px 12px;
@@ -754,17 +758,81 @@ body.sidebar-collapsed #research-detail > .max-w-2xl {
 }
 .essay-body tr:last-child td { border-bottom: 0; }
 .essay-fig {
-  margin: 2rem 0 2.4rem;
+  margin: 2.2rem 0 2.7rem;
+  position: relative;
+}
+.fig-export {
+  position: static;
+  display: flex;
+  justify-content: flex-end;
+  gap: 4px;
+  margin: 8px 0 0;
+  padding: 0 2px;
+}
+.fig-export button {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: #fffaf2;
+  border: 1px solid #1a1208;
+  box-shadow: 2px 2px 0 #1a1208;
+  padding: 3px 7px;
+  cursor: pointer;
+  color: #1a1208;
+  line-height: 1;
+}
+.fig-export button:hover { background: #f5d6a0; }
+.fig-export button:disabled { opacity: 0.55; cursor: wait; }
+@media (max-width: 767px) {
+  .fig-export { opacity: 1; }
 }
 .essay-fig figcaption {
   font-family: "JetBrains Mono", monospace;
   font-size: 11px;
   letter-spacing: 0.04em;
   color: #5c5346;
-  padding: 10px 2px 0;
+  padding: 12px 4px 0;
   line-height: 1.45;
 }
-.essay .sketch-board { margin: 0; }
+.essay .sketch-board {
+  margin: 0;
+  overflow: hidden;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 27px,
+      rgba(26, 18, 8, 0.035) 28px
+    ),
+    #fffdf8;
+  border: 1.5px solid #1a1208;
+  box-shadow: 3px 3px 0 #1a1208;
+  padding: 14px 10px 10px;
+}
+.essay .sketch-svg { min-width: 0; }
+.essay-eq {
+  display: block;
+  margin: 1.7rem 0 2rem;
+  padding: 1.3rem 1rem 1.15rem;
+  background: #fffaf2;
+  border: 1.5px solid #1a1208;
+  box-shadow: 3px 3px 0 #1a1208;
+  text-align: center;
+  overflow-x: auto;
+}
+.essay-eq .katex-display { margin: 0; }
+.essay-eq .katex { font-size: 1.12em; }
+.essay-math { white-space: nowrap; }
+.essay-math .katex { font-size: 1.05em; }
+.essay .sketch-board[data-diagram="flowedge-stack"] .sketch-svg { aspect-ratio: 960 / 300; }
+.essay .sketch-board[data-diagram="flowedge-deadline"] .sketch-svg { aspect-ratio: 960 / 300; }
+.essay .sketch-board[data-diagram="flowedge-arena"] .sketch-svg { aspect-ratio: 960 / 400; }
+.essay .sketch-board[data-diagram="flowedge-coop"] .sketch-svg { aspect-ratio: 960 / 300; }
+.essay .sketch-board[data-diagram="flowedge-slab"] .sketch-svg { aspect-ratio: 960 / 320; }
+.essay .sketch-board[data-diagram="flowedge-layout"] .sketch-svg { aspect-ratio: 960 / 500; }
+.essay .sketch-board[data-diagram="flowedge-mmap"] .sketch-svg { aspect-ratio: 960 / 340; }
+.essay .sketch-board[data-diagram="flowedge-pool"] .sketch-svg { aspect-ratio: 960 / 300; }
 .essay .sketch-board[data-diagram="netforge-loop"] .sketch-svg { aspect-ratio: 960 / 460; }
 .essay .sketch-board[data-diagram="netforge-observe"] .sketch-svg { aspect-ratio: 960 / 400; }
 .essay .sketch-board[data-diagram="netforge-time"] .sketch-svg { aspect-ratio: 960 / 300; }
