@@ -825,6 +825,7 @@ body.sidebar-collapsed #research-detail > .max-w-2xl {
 .essay-eq .katex { font-size: 1.12em; }
 .essay-math { white-space: nowrap; }
 .essay-math .katex { font-size: 1.05em; }
+.essay .sketch-board[data-diagram="flowedge"] .sketch-svg { aspect-ratio: 960 / 420; }
 .essay .sketch-board[data-diagram="flowedge-stack"] .sketch-svg { aspect-ratio: 960 / 300; }
 .essay .sketch-board[data-diagram="flowedge-deadline"] .sketch-svg { aspect-ratio: 960 / 300; }
 .essay .sketch-board[data-diagram="flowedge-arena"] .sketch-svg { aspect-ratio: 960 / 400; }

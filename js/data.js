@@ -309,15 +309,15 @@ export const researchData = [
     type: "ESSAY",
     format: "substack",
     title: "Don't malloc after load",
-    dek: "A faster median against PyTorch is easy to celebrate. The sample path still has to be allocation-controlled, and a 10 ms period still has to be allowed to miss.",
+    dek: "After load, sample should not allocate. Then a faster PyTorch median is a kernel compare, and a 10 ms miss is a logged result — not the same slide.",
     date: "2026.09",
     publishedDate: "19 September 2026",
-    readMinutes: 14,
+    readMinutes: 16,
     authors: "I. Jankowski",
     fullAuthors: "Igor Jankowski",
     project: "flowedge",
     abstract: [
-      "The median against PyTorch can look like a robot loop. It is not. This article is the C++ behind allocation-controlled, deadline-aware inference: one bump arena at load, kernels that do not allocate in the timed window, and a miss you can log when a 10 ms period does not fit this checkpoint."
+      "Don't malloc after load. That is how 851 vs 1409 ms on CPU, and 131 vs 345 ms on a GTX 1650, stay a PyTorch compare, and how 20 / 20 misses at 10 ms stay a result instead of a missing row."
     ],
     links: {
       github: "https://github.com/reforcemind/FlowEdge",

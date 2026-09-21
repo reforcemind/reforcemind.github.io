@@ -1,5 +1,5 @@
 import { extractMath, injectMathPlaceholders, hydrateMath } from './essay-math.js?v=1';
-import { researchData } from './data.js?v=24';
+import { researchData } from './data.js?v=26';
 import { mountDiagrams } from './sketch-diagram.js?v=16';
 import { mountSketchExport } from './sketch-export.js?v=1';
 
@@ -125,7 +125,7 @@ window.selectItem = function(id) {
         `;
     }
     if (item.contentFile) {
-        fetch(`${item.contentFile}?v=19`)
+        fetch(`${item.contentFile}?v=22`)
             .then(response => {
                 if (!response.ok) throw new Error('Network response was not ok');
                 return response.text();

@@ -1,41 +1,53 @@
-There is a pattern that shows up when a learned policy leaves the training stack. Someone times PyTorch. Someone rewrites the hot part in C++. The median drops. On a slide that looks like the robot is solved. Then they ask the same program to finish inside a 10 ms period, and every step misses.
+I have two published numbers for the same Diffusion Policy checkpoint, and they argue with each other.
 
-The compiler is not really the issue. The issue is the timed window. If `sample` can still allocate, fault in a page, or walk a graph interpreter, you have two programs with the same weights and different tails. A median cannot see that. I wrote [FlowEdge](https://github.com/reforcemind/FlowEdge) for allocation-controlled, deadline-aware inference: one arena sized at load, kernels that take `std::span`, and a miss that is a value if you set a period this checkpoint cannot meet. That is not a claim of deterministic hard real-time.
+On a matched replay, the C++ path is **851 vs 1409 ms** p50 on CPU (`threads=1`) and **131 vs 345 ms** on a GTX 1650. Same observations. Same weights. That speedup is real.
 
-## Introduction
+Then I attach `--period-ms 10 --on-miss hold` and run twenty steps.
 
-Two groups of people bump into this, and they do not share a vocabulary.
+**20 / 20 misses.**
 
-If you train policies, the object is a checkpoint. Flow matching is a short ODE: noise in, action out, cost is the number of function evaluations. Diffusion Policy is a family of visuomotor policies; implementations can use more than one scheduler. The FlowEdge replay here uses a Conv1D U-Net with DDIM sampling. You train those in PyTorch. LeRobot still owns cameras, normalization, and the motors. None of that belongs inside the inference kernel.
+Both results are true. They are not the same experiment. The first one asks whether FlowEdge is faster than PyTorch on a file. The second asks whether this checkpoint can keep a 10 ms promise. I started [FlowEdge](https://github.com/reforcemind/FlowEdge) because those two kept getting put on one slide.
 
-If you write C++, the object is what happens after `load` returns. An **arena** is one `std::byte` slab and a cursor. `alloc` is `std::align` plus a bump. There is no free list. The **hot path** is every call to `sample`. **p50** is the median of those times on a file. **p99** is the time that 99 percent beat, and it is only a tail estimate if the window is large. **Max** is the worst one in the window. A **period** is a wall-clock budget you may attach to that loop. If the sample is still running when the wall arrives, that is a **miss**. The caller still needs a defined action: hold the last output, drop the send, or raise.
+The C++ rule that keeps them from mixing is simple. After `load` returns, `sample` should not malloc. If it still can, the 851 ms is mixed with the heap, and the 20 / 20 misses are mixed with whoever else is on the machine. Pages, threads, and a period you are allowed to miss are the same sentence applied to the rest of the runtime.
 
-Throughput is a different question. You can raise it by batching and still miss every deadline.
+FlowEdge is a small C++23 runtime for two converted heads: flow matching, and a Conv1D U-Net Diffusion Policy sampled with DDIM. Other Diffusion Policy stacks can use other schedulers. Training stays in PyTorch. Cameras, normalization, and the motors can stay in LeRobot. FlowEdge takes the narrower job: load the converted file, size the memory it needs, and produce actions, or say that the action was late.
 
-FlowEdge is C++23. You convert one of those two heads, load the file, call `sample`. The rest of this piece is the container: it removes several avoidable sources of latency variance and makes deadline misses explicit. It is not a claim that Diffusion Policy now fits in 10 ms, and it is not a claim that the OS, the caches, or CUDA have gone away.
+<figure class="essay-fig">
+  <div class="sketch-board" data-diagram="flowedge"></div>
+  <figcaption>Fig. 1 — LeRobot can own cameras and the robot. FlowEdge owns the sample path, and the three things it can do when that path is late.</figcaption>
+</figure>
 
-## The cheap win
+After `load` returns, as little as possible should still be happening. No discovering the model. No walking a graph. No allocator in the timed window. No shipping weights to the GPU again. The boring work belongs at load.
 
-On the published Diffusion Policy replay, the C++ path is faster than PyTorch: **851 vs 1409 ms** p50 on CPU (`threads=1`, same observation file), **131 vs 345 ms** on a GTX 1650. Same checkpoint. Same observations. That compare is real. It answers “is this implementation slower than the training stack on this file?”
+That is not hard real-time. Linux can still preempt the process. Caches, TLBs, frequency scaling, interrupts, CUDA, and contention are still there. The narrower goal is allocation-controlled, deadline-aware inference: take out variance we put there ourselves, measure what is left, and treat a miss as a result instead of a missing row.
 
-It does not answer “can this finish in 10 ms?”
+Throughput is a different axis. You can raise it by batching and still miss every deadline.
 
-The period measurement is a different harness. `--period-ms 10 --on-miss hold`, twenty steps: **20 / 20 misses**. Observed p50 / p99 / max over that run: CPU 655 / 812 / 834 ms, CUDA 589 / 1571 / 1795 ms. Those absolute p50 values should not be compared to the 131 ms replay number. The period run is here to answer the deadline question. Twenty steps is enough to see that every tick missed. It is not a serious p99 benchmark. For a tail you would trust, you want hundreds of samples, preferably thousands.
+## Two questions, two harnesses
 
-When latency is hundreds of milliseconds against a 10 ms budget, you do not need a precise p99 to conclude the deadline is not met. Reporting only the 131 ms replay median is how the cheap win looks like a control loop.
+The replay table answers the first question.
+
+| Setup | FlowEdge | PyTorch |
+|---|---:|---:|
+| CPU, `threads=1` | 851 ms p50 | 1409 ms p50 |
+| GTX 1650 | 131 ms p50 | 345 ms p50 |
+
+A period is not another latency column. It is a wall-clock boundary. If the next tick arrives while `sample` is still running, the promise was missed, and the caller still has to do something: **hold** the last output, **drop** the late one, or **raise**.
 
 <figure class="essay-fig">
   <div class="sketch-board" data-diagram="flowedge-deadline"></div>
-  <figcaption>Fig. 1 — A period is a wall-clock budget. On this checkpoint we miss 10 ms every time. The miss is part of the API.</figcaption>
+  <figcaption>Fig. 2 — A period is a wall. Crossing it is a miss. hold, drop, and raise are part of the API, not a footnote.</figcaption>
 </figure>
 
-So the systems work is not “make the median smaller until the slide is green.” It is: what is `sample` allowed to do, and what do you log when it cannot finish.
+The period run is a different harness from the replay. Its absolute p50 should not be compared to 131 ms. On the published PushT DDIM checkpoint, twenty steps at 10 ms with `hold` miss **20 / 20**. Observed p50 / p99 / max over that smoke run: CPU 655 / 812 / 834 ms, CUDA 589 / 1571 / 1795 ms.
 
-## One slab at load
+Twenty samples are enough to see that every tick missed. They are not a p99 study. For a tail you would trust, you want hundreds of samples, preferably thousands. When the budget is 10 ms and the step is hundreds of milliseconds, you do not need a precise tail to know the deadline is not met. You do need not to hide the miss behind the replay median.
 
-`malloc` inside `sample` introduces allocator state into the timed window. It may involve synchronization, metadata traversal, page faults, or system calls. Two identical inputs can then take different times because the heap looked different. The PyTorch compare is no longer only about kernels.
+## Size the slab at load
 
-At load the engine sizes one slab from the checkpoint:
+Once a miss is a value, the heap in `sample` is an obvious place to look. `malloc` there puts allocator state into the timed window. It may involve synchronization, metadata traversal, page faults, or system calls. None of that has to happen on every call, which is exactly why two identical inputs can take different times.
+
+So the engine sizes one `std::byte` slab from the checkpoint at load:
 
 $$
 \begin{aligned}
@@ -47,12 +59,12 @@ $$
 
 <figure class="essay-fig">
   <div class="sketch-board" data-diagram="flowedge-slab"></div>
-  <figcaption>Fig. 2 — Same formula as a map of the slab. Weights dominate. Alignment is the remainder after 64-byte carving.</figcaption>
+  <figcaption>Fig. 3 — Weights, decode state, solver scratch, the pool, and alignment padding in one allocation.</figcaption>
 </figure>
 
-Weights are carved once, 64-byte aligned. Decode state, ODE scratch, the task ring, and the `std::jthread` objects live in the same bytes. `alloc` returns `nullptr` on exhaustion, so a model that does not fit fails in `fe_engine_load`, not in the middle of a step.
+Weights are carved once, 64-byte aligned. Persistent decode state, flow scratch, the task ring, and the worker objects live in the same bytes. If the model does not fit, `alloc` returns `nullptr` in `fe_engine_load`. I want that before the first tick, not halfway through a step.
 
-Scratch is stack-like. `mark()` records the cursor. `reset_to()` winds it back. A layer carves intermediates, the caller rewinds, the next layer reuses the same range. No per-object header, and the kernels do not own their buffers.
+The bump itself is small:
 
 ```cpp
 std::byte* Arena::alloc(std::size_t n, std::size_t a) noexcept {
@@ -64,34 +76,38 @@ std::byte* Arena::alloc(std::size_t n, std::size_t a) noexcept {
 }
 ```
 
+No free list. Scratch is a stack on the same slab. `mark()` records the cursor. A layer carves what it needs. `reset_to()` rewinds. The next layer reuses the same range.
+
 <figure class="essay-fig">
   <div class="sketch-board" data-diagram="flowedge-layout"></div>
-  <figcaption>Fig. 3 — Address space of the slab. begin_ to end_ is one allocation. cursor_ bumps; reset_to(mark) rewinds scratch.</figcaption>
+  <figcaption>Fig. 4 — Weights stay put. Scratch advances the cursor and is rewound. begin_ to end_ is still one allocation.</figcaption>
 </figure>
 
-Load may still `new` the slab. That is allowed. `flowedge-profile` counts allocations only inside the timed window. Zero is the number I keep on that path. Two concurrent solves means two engines. Mutable scratch is never shared.
-
-This removes several avoidable sources of latency variance and makes a miss explicit if you set a period. It does not make execution deterministic. OS scheduling, interrupts, CPU frequency scaling, caches, TLBs, CUDA scheduling, and contention are still there.
+The shapes are known. Repeated `sample` asks for the same kinds of temporaries. There is not much reason to rediscover them on every call. Load may still `new` the slab. `flowedge-profile` counts allocations only inside the timed window. Zero is the number I keep on the published path. Two concurrent solves means two engines. Mutable scratch is never shared.
 
 <figure class="essay-fig">
   <div class="sketch-board" data-diagram="flowedge-arena"></div>
-  <figcaption>Fig. 4 — One std::byte slab. Bump on alloc, rewind on mark. Exhaustion is a load error.</figcaption>
+  <figcaption>Fig. 5 — Convert once, size one arena, fail in load if it does not fit. The hot path is not the allocator.</figcaption>
 </figure>
 
-## Touch the pages at load
+This removes several avoidable sources of latency variance and makes a miss explicit if you set a period. It does not make execution deterministic.
 
-The loader mmaps a `.safetensors` file, reads the JSON header without a JSON library, and copies each tensor into the arena. mmap alone does not guarantee that all required pages are resident and their page-table entries populated before the timed window. A plain lazy mmap can move first-touch faults into `sample`. `MAP_POPULATE`, an explicit pass over the pages, or page locking are other ways to do that work at load. FlowEdge copies tensors during load so the required pages are touched and the final kernel layout is established before sampling. File offsets are not 64-byte aligned. The kernels want 64-byte spans, and the copy is also how that layout is fixed.
+## Mapping the file is not the same as being ready
+
+The loader mmaps `.safetensors`, reads the JSON header without a JSON library, and copies each tensor into the arena. mmap alone does not guarantee that all required pages are resident and their page-table entries populated before the timed window. A plain lazy map can move first-touch work into `sample`.
 
 <figure class="essay-fig">
   <div class="sketch-board" data-diagram="flowedge-mmap"></div>
-  <figcaption>Fig. 5 — A plain lazy mmap can fault on first touch inside sample. The load copy touches the pages and sets the 64-byte layout. MAP_POPULATE or mlock would be other load-time options.</figcaption>
+  <figcaption>Fig. 6 — mmap gives an address range. First-touch work can still land in sample unless load does that work first.</figcaption>
 </figure>
+
+`MAP_POPULATE`, an explicit walk of the pages, or locking them are other ways to push that work earlier. FlowEdge copies at load anyway: it touches the pages it will sample from, and it establishes the 64-byte layout the kernels want. File offsets are not guaranteed to have that alignment.
 
 BF16 weights stay BF16. Widening is a left shift in the innermost SIMD loop of `matmul`. Activations stay F32. `in_proj` and `out_proj` land near 15 GB/s on the published CPU path. On this path, the projection behaves like a bandwidth-dominated kernel; further FMA blocking is not the bottleneck that would close the gap from 851 ms to 10 ms.
 
-## Nothing crosses the C ABI
+## Keep the C ABI small
 
-The public surface is C linkage over an opaque handle. Python and a ROS2 node both include `engine.h`. They do not see the arena.
+Python and a ROS2 node should not see the arena. They get an opaque `fe_engine*` and C linkage.
 
 ```c
 fe_engine* fe_engine_load(const char* path);
@@ -105,56 +121,70 @@ void fe_engine_cancel_before(fe_engine*, uint64_t generation);
 void fe_engine_free(fe_engine*);
 ```
 
-`fe_engine_load` catches OOM and returns `nullptr`. Sample does not throw. There is no process-global current model. One handle is one session. `flow_begin` / `flow_advance` exist so a caller can poll between whole solver steps. That is in the header. It does not change the p50 on this checkpoint. Scalar, AVX2, NEON, and CUDA backends sit behind the same interface; the backend is a link-time switch.
-
 <figure class="essay-fig">
   <div class="sketch-board" data-diagram="flowedge-stack"></div>
-  <figcaption>Fig. 6 — C ABI, then the engine, then kernels.h, then the ISA. The backend is a link-time switch.</figcaption>
+  <figcaption>Fig. 7 — Opaque handle, then the engine, then kernels on caller-owned spans. Scalar, AVX2, NEON, and CUDA sit behind the same interface.</figcaption>
 </figure>
 
-## Hand-written kernels
+`fe_engine_load` catches OOM and returns `nullptr`. `sample` does not throw across the C boundary. There is no process-global current model. One handle is one session and owns its mutable state. Scalar, AVX2, and NEON are a CMake pick. CUDA is a different translation unit behind the same header, and it is not inside the v0.1.2 CPU wheel.
 
-There is no ONNX interpreter on `sample`. Reuse is the arena, the loader, and `kernels.h`. Every kernel operates on caller-owned buffers exposed as `std::span` and performs no dynamic allocation. Those buffers are 64-byte aligned. CMake picks AVX2, NEON, or scalar. CUDA is a different translation unit behind the same header, and it is not inside the v0.1.2 CPU wheel.
+## Yield between solver steps
 
-Threading is an SPMC pool carved from the slab, not `std::async`. Small projections stay on the caller thread. Large ones pick a 2/4/8 tier from the shape.
+A flow-matching solve is several network evaluations. If a newer observation arrives while the old solve is still running, finishing the old one is not automatically useful. `flow_begin` / `flow_advance` split that work at whole Euler, Heun, or RK4 steps. `cancel_before` is an atomic generation watermark.
+
+<figure class="essay-fig">
+  <div class="sketch-board" data-diagram="flowedge-coop"></div>
+  <figcaption>Fig. 8 — Advance yields between whole function evaluations, not inside a matmul. A newer observation can drop stale work before it is published.</figcaption>
+</figure>
+
+I do not interrupt a matmul. The caller gets control between NFEs. That does not make this checkpoint cheap, and it does not turn 851 ms into 10 ms. It makes stale work visible. Publishing the right action for an observation that stopped mattering 200 ms ago is not a win.
+
+## Do not smuggle the heap back in through threads
+
+`std::async` and packaged tasks are an easy way to allocate again. The pool is an SPMC ring carved from the same slab. Small projections stay on the caller thread. Larger shapes pick a 2 / 4 / 8 tier. Workers spin briefly, then park on `atomic::wait`.
 
 <figure class="essay-fig">
   <div class="sketch-board" data-diagram="flowedge-pool"></div>
-  <figcaption>Fig. 7 — The pool lives in the slab. No packaged_task, no heap on enqueue.</figcaption>
+  <figcaption>Fig. 9 — Task ring and workers live in the arena. Enqueue should not allocate.</figcaption>
 </figure>
 
-At CUDA load, weights and scratch go up once. Tests assert no `cudaMalloc` after that. A 4 GB GTX 1650 under WSL cannot always hold the PushT U-Net (~959 MiB). If the upload fails, the CPU kernels stay, and `fe_engine_cuda_resident` is 0. The 131 vs 345 ms replay number is from a card that took the model.
+Every kernel operates on caller-owned buffers exposed as `std::span` and performs no dynamic allocation. Those buffers are 64-byte aligned. There is no ONNX interpreter on `sample`. Reuse is the arena, the loader, and `kernels.h`.
 
-## How you know you solved it
+CUDA follows the same rule. Weights and scratch go up at load. Tests assert no `cudaMalloc` after that. A 4 GB GTX 1650 under WSL cannot always hold the PushT U-Net (~959 MiB). If residency fails, CPU kernels stay loaded and `fe_engine_cuda_resident` is 0. The 131 vs 345 ms replay number is from a card that took the model.
 
-A faster median is not the whole job. I log whether the timed window allocated, whether a period I asked for was missed, whether CUDA is still resident, and whether a profile on a named host moved.
+## What the numbers are for
 
-| Measurement | Number | What it is |
+Most numbers are unused unless you keep the question next to them.
+
+| Measurement | Result | Question |
 |---|---|---|
-| DP replay, CPU `threads=1` | 851 vs 1409 ms p50 | vs PyTorch, same file |
-| DP replay, GTX 1650 | 131 vs 345 ms p50 | vs PyTorch CUDA, same observations |
-| Period 10 ms, CPU, hold | 20 / 20 misses | deadline question; observed 655 / 812 / 834 ms over 20 steps |
-| Period 10 ms, CUDA, hold | 20 / 20 misses | same question, different harness than 131 ms; observed 589 / 1571 / 1795 ms over 20 steps |
-| Flow matching vs PyTorch | ~1e-6 rel | ULP gate, not a policy p50 |
+| DP replay, CPU `threads=1` | 851 vs 1409 ms p50 | Is the C++ replay faster than PyTorch on the same file? |
+| DP replay, GTX 1650 | 131 vs 345 ms p50 | Same question on CUDA |
+| Period 10 ms, CPU, hold | 20 / 20 misses | Does this checkpoint meet this period? |
+| Period 10 ms, CUDA, hold | 20 / 20 misses | Same deadline question, different harness than 131 ms |
+| Flow matching vs PyTorch | ~1e-6 rel | Did `flow_sample` keep the numerical output? |
 
-The 20 / 20 miss counts are the result in those rows. The p50 / p99 / max figures next to them are observations from that smoke run, not a robust tail. Replay p50 and period p50 should not be read as the same experiment.
+The last row is a ULP gate. I have not published a matched flow-matching policy p50, and I do not want the correctness check to become one by accident. The 20 / 20 miss counts are the result in the period rows. The observed 655 / 812 / 834 ms and 589 / 1571 / 1795 ms next to them are from that twenty-step run, not a robust tail.
 
-| Question | What you log |
+| Question | What I log |
 |---|---|
 | Did the timed window allocate? | malloc count inside that window |
-| Did we miss a period we asked for? | misses / steps, then observed p50 / p99 / max |
+| Did we miss the period we asked for? | misses / steps |
+| What did observed latency look like? | p50 / p99 / max |
 | Is CUDA still resident? | `fe_engine_cuda_resident` |
-| Did a named-host profile move? | profile JSON vs a baseline on that host |
+| Did a named-host profile move? | profile JSON vs that host's baseline |
 
-The last row of the first table is a correctness check on `flow_sample`. I have not published a flow-matching policy p50. If you need one, run a matched replay.
+`flowedge-profile` warms, times, and can fail a build when malloc appears in the window or a profile moves against a baseline that carries the checkpoint fingerprint, compiler, and CPU label. A different machine is not the same comparison. A twenty-step period smoke test is not that profile.
 
-`flowedge-profile` warms, times, and can fail a build when malloc appears in the window or a profile regresses against a baseline that carries the checkpoint fingerprint, compiler, and CPU label. A different machine is not the same comparison. A 20-step period smoke test is not that profile.
+## The bet
 
-## Other tools
+PyTorch is still where I train. LeRobot is still cameras, preprocessing, and the robot. TensorRT and ONNX are still the tools for a general DAG. A model server is still the tool for a batch.
 
-PyTorch and LeRobot are the right tools to train, to encode cameras, and to talk to motors. TensorRT and ONNX are the right tools when the architecture is a general DAG. A model server is the right tool when the unit of work is a batch.
+FlowEdge is narrower. Two heads. Memory layout known before the first tick. Pages and device buffers ready before the first tick. Kernels that do not own their buffers and do not allocate. A miss you can log if the period does not fit. Allocation-controlled and deadline-aware. Not a 100 Hz Diffusion Policy loop. Not a hard real-time kernel.
 
-The C++ bet here is narrower. These two heads. One slab at load. No allocator in the timed window. A miss you can log if you set a period this file cannot meet. Allocation-controlled and deadline-aware, not a hard real-time kernel.
+Don't malloc after load. The rest of this runtime is that sentence, applied to pages, threads, and a period you are allowed to miss.
+
+Once those surprises are out of the way, the remaining latency is the interesting part.
 
 ## Trying it
 
@@ -168,8 +198,9 @@ python examples/core/flow_sample.py models/mamba_flow.safetensors euler 10
 From source: C++23, CMake 3.21+.
 
 ```bash
-cmake -S . -B build -DCMAKE_BUILD_TYPE=Release && cmake --build build -j
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+cmake --build build -j
 ./build/flow_sample models/mamba_flow.safetensors euler 10
 ```
 
-Code: [github.com/reforcemind/FlowEdge](https://github.com/reforcemind/FlowEdge). Notes: [arena](https://reforcemind.github.io/FlowEdge/architecture/memory.html), [kernels](https://reforcemind.github.io/FlowEdge/architecture/kernels.html), [C ABI](https://reforcemind.github.io/FlowEdge/api/c-abi.html), [performance](https://reforcemind.github.io/FlowEdge/performance.html).
+Code: [github.com/reforcemind/FlowEdge](https://github.com/reforcemind/FlowEdge). Notes: [memory](https://reforcemind.github.io/FlowEdge/architecture/memory.html), [kernels](https://reforcemind.github.io/FlowEdge/architecture/kernels.html), [C ABI](https://reforcemind.github.io/FlowEdge/api/c-abi.html), [performance](https://reforcemind.github.io/FlowEdge/performance.html).
